@@ -87,60 +87,200 @@ Legal work shouldn't be bogged down by complicated software. LCMS was built with
 
 ## 📦 Installation & Setup
 
-### Prerequisites
-- PHP 8.2 or higher
-- Composer
-- Node.js & NPM
-- MySQL 8.0+
-- Web server (Apache/Nginx)
+### 🔧 Prerequisites
 
-### Quick Start
+**System Requirements:**
+- **PHP 8.2 or higher** with required extensions
+- **Composer** (PHP dependency manager)
+- **Node.js 16+ & NPM** (for frontend assets)
+- **MySQL 8.0+** (database)
+- **Web server** (Apache/Nginx) or XAMPP for local development
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd Legal-Case-Mngmnt
+**Required PHP Extensions:**
+Ensure the following PHP extensions are enabled (especially important for XAMPP users):
+- `zip` - **Required for Composer and Laravel**
+- `curl` - For HTTP requests
+- `fileinfo` - For file type detection
+- `mbstring` - For string manipulation
+- `openssl` - For encryption
+- `pdo_mysql` - For MySQL database connection
+- `tokenizer` - For Laravel framework
+- `xml` - For XML processing
+- `gd` or `imagick` - For image processing
+- `bcmath` - For mathematical operations
+
+### 🚀 Step-by-Step Installation Guide
+
+#### Step 1: Enable Required PHP Extensions (XAMPP Users)
+
+If you're using XAMPP, you need to enable required PHP extensions:
+
+1. **Open XAMPP Control Panel**
+2. **Stop Apache** if it's running
+3. **Navigate to your XAMPP installation directory** (usually `C:\xampp`)
+4. **Edit `php.ini`** file located in `C:\xampp\php\php.ini`
+5. **Find and uncomment** (remove the `;` at the beginning) these lines:
+   ```ini
+   extension=zip
+   extension=curl
+   extension=fileinfo
+   extension=mbstring
+   extension=openssl
+   extension=pdo_mysql
+   extension=gd
+   extension=bcmath
    ```
+6. **Save the file** and **restart Apache** in XAMPP Control Panel
+7. **Verify extensions** are loaded by creating a PHP file with `<?php phpinfo(); ?>` and checking the loaded extensions
 
-2. **Install PHP dependencies**
-   ```bash
-   composer install
-   ```
+#### Step 2: Clone the Repository
 
-3. **Install Node.js dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/firaghost/Legal-Case-Management-Public.git
+cd Legal-Case-Management-Public
+```
 
-4. **Environment setup**
+#### Step 3: Install PHP Dependencies
+
+```bash
+composer install
+```
+
+> ⚠️ **If you get a "zip extension not found" error**, make sure you've enabled the zip extension in Step 1.
+
+#### Step 4: Install Node.js Dependencies
+
+```bash
+npm install
+```
+
+#### Step 5: Environment Configuration
+
+1. **Copy environment file:**
    ```bash
    cp .env.example .env
+   ```
+
+2. **Generate application key:**
+   ```bash
    php artisan key:generate
    ```
 
-5. **Configure your database**
-   - Update `.env` with your database credentials
-   - Create a new MySQL database
-
-6. **Run migrations and seeders**
-   ```bash
-   php artisan migrate --seed
+3. **Configure your `.env` file** with your database credentials:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=legal_case_management
+   DB_USERNAME=root
+   DB_PASSWORD=
    ```
 
-7. **Build assets**
+#### Step 6: Database Setup
+
+1. **Create a new MySQL database** named `legal_case_management` (or your preferred name)
+2. **Update database credentials** in your `.env` file
+3. **Test database connection:**
    ```bash
-   npm run build
+   php artisan migrate:status
    ```
 
-8. **Start the development server**
-   ```bash
-   php artisan serve
-   ```
+#### Step 7: Create Required Directories
 
-9. **Set up file storage**
-   ```bash
-   php artisan storage:link
-   ```
+Ensure all necessary directories exist:
+
+```bash
+# Create storage directories if they don't exist
+mkdir -p storage/framework/cache
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
+mkdir -p storage/logs
+mkdir -p bootstrap/cache
+```
+
+**For Windows users:**
+```cmd
+if not exist "storage\framework\cache" mkdir "storage\framework\cache"
+if not exist "storage\framework\sessions" mkdir "storage\framework\sessions"
+if not exist "storage\framework\views" mkdir "storage\framework\views"
+if not exist "storage\logs" mkdir "storage\logs"
+if not exist "bootstrap\cache" mkdir "bootstrap\cache"
+```
+
+#### Step 8: Set Directory Permissions
+
+**For Linux/Mac users:**
+```bash
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+```
+
+**For Windows/XAMPP users:**
+- Ensure your web server has read/write permissions to `storage` and `bootstrap/cache` directories
+
+#### Step 9: Run Database Migrations and Seeders
+
+```bash
+php artisan migrate --seed
+```
+
+> 📝 **Note:** This will create all necessary database tables and populate them with sample data including default user accounts.
+
+#### Step 10: Set Up File Storage
+
+```bash
+php artisan storage:link
+```
+
+#### Step 11: Build Frontend Assets
+
+```bash
+npm run build
+```
+
+#### Step 12: Start the Development Server
+
+```bash
+php artisan serve
+```
+
+Your application will be available at: `http://localhost:8000`
+
+### 🔍 Troubleshooting Common Issues
+
+**Issue: "Class 'ZipArchive' not found"**
+- **Solution:** Enable the `zip` extension in your `php.ini` file (see Step 1)
+
+**Issue: "Permission denied" errors**
+- **Solution:** Ensure proper directory permissions for `storage` and `bootstrap/cache`
+
+**Issue: "Directory not found: storage/framework/views"**
+- **Solution:** Create the directory manually using the commands in Step 7
+
+**Issue: "SQLSTATE[HY000] [2002] Connection refused"**
+- **Solution:** Ensure MySQL is running and database credentials in `.env` are correct
+
+**Issue: Composer install fails**
+- **Solution:** Ensure all required PHP extensions are enabled and PHP version is 8.2+
+
+### 🔄 Alternative Installation (Using Laravel Sail)
+
+For a Docker-based development environment:
+
+```bash
+# Install dependencies
+composer install
+
+# Start Sail
+./vendor/bin/sail up -d
+
+# Run migrations
+./vendor/bin/sail artisan migrate --seed
+
+# Build assets
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+```
 
 ### 🔑 Default Login Credentials
 
@@ -148,15 +288,15 @@ After running the seeders, you can log in with these default accounts:
 
 **Administrator Account:**
 - Email: `admin@lcms.test`
-- Password: `admin123`
+- Password: `password`
 
 **Supervisor Account:**
 - Email: `supervisor@lcms.test`
-- Password: `supervisor123`
+- Password: `password`
 
 **Lawyer Account:**
 - Email: `lawyer@lcms.test`
-- Password: `lawyer123`
+- Password: `password`
 
 > ⚠️ **Important:** Change these default passwords immediately after your first login, especially in production environments!
 
@@ -194,24 +334,13 @@ We welcome contributions from the community! Whether you're fixing bugs, adding 
 - Add tests for new features
 - Update documentation as needed
 
-## 🔒 Security
-
-Security is paramount in legal software. If you discover any security vulnerabilities, please:
-
-1. **DO NOT** create a public issue
-2. Email the security team directly
-3. Provide detailed information about the vulnerability
-4. Allow time for the issue to be addressed before public disclosure
-
-We take all security reports seriously and will respond promptly.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- Built with ❤️ for legal professionals
+- Built for legal professionals
 - Powered by the amazing Laravel community
 - Special thanks to all contributors and testers
 - Designed with modern professional standards in mind
