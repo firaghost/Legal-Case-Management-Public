@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legal Case Management System – End-User Guide</title>
+<style>
+    :root{--brand:#004b8d;--light:#f5f7fa;--border:#d0d7de;--text:#24292f;font-size:16px}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:#fff;line-height:1.6}
+    header{background:var(--brand);color:#fff;padding:60px 40px;text-align:center}
+    header h1{margin:0;font-size:2.2rem;font-weight:600}
+    header p{margin:8px 0 0;font-size:1rem;opacity:.9}
+    nav{background:var(--light);border-bottom:1px solid var(--border);padding:25px 40px}
+    nav h2{margin-top:0;font-size:1.25rem;color:var(--brand)}
+    nav ul{list-style:none;padding-left:20px;margin:0}
+    nav li{margin:4px 0}
+    nav a{color:var(--brand);text-decoration:none}
+    nav a:hover{text-decoration:underline}
+    main{padding:35px 60px;max-width:1000px;margin:auto}
+    h2{margin-top:50px;font-size:1.75rem;border-bottom:3px solid var(--brand);padding-bottom:6px;color:var(--brand)}
+    h3{margin-top:30px;font-size:1.25rem;color:var(--brand)}
+    h4{margin-top:18px;font-size:1rem;font-weight:600}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem}
+    th,td{border:1px solid var(--border);padding:8px;text-align:left}
+    th{background:#eef1f5;font-weight:600}
+    ul,ol{margin-top:8px}
+    code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9rem}
+    footer{margin:60px 0 20px;text-align:center;font-size:.85rem;color:#6b7280}
+    .page-break{page-break-after:always}
+</style>
+</head>
+<body>
+<header>
+    <h1>Legal Case Management System (LCMS)</h1>
+    <p>Comprehensive End-User Guide</p>
+</header>
+
+<nav>
+    <h2>Contents</h2>
+    <ul>
+        <li><a href="#overview">1&nbsp; System Overview</a></li>
+        <li><a href="#roles">2&nbsp; Access &amp; User Roles</a></li>
+        <li><a href="#login">3&nbsp; Getting Started</a></li>
+        <li><a href="#cases">4&nbsp; Managing Cases</a></li>
+        <li><a href="#forms">5&nbsp; Case Entry Forms</a>
+            <ul>
+                <li><a href="#form-clean">5.1 Clean Loan Recovery</a></li>
+                <li><a href="#form-secured">5.2 Secured Loan Recovery</a></li>
+                <li><a href="#form-labor">5.3 Labor Case</a></li>
+                <li><a href="#form-civil">5.4 Civil Case</a></li>
+                <li><a href="#form-criminal">5.5 Criminal Case</a></li>
+                <li><a href="#form-advisory">5.6 Legal Advisory</a></li>
+            </ul>
+        </li>
+        <li><a href="#assignment">6&nbsp; Task Assignment &amp; Workload</a></li>
+        <li><a href="#workflow">7&nbsp; Approval &amp; Workflow</a></li>
+        <li><a href="#notifications">8&nbsp; Notifications</a></li>
+        <li><a href="#audit">9&nbsp; Audit Logs</a></li>
+        <li><a href="#reports">10&nbsp; Search &amp; Reports</a></li>
+        <li><a href="#settings">11&nbsp; System Settings (Admin)</a></li>
+    </ul>
+</nav>
+
+<main>
+<section id="overview">
+    <h2>1. System Overview</h2>
+    <p>The LCMS is a web-based platform that records, tracks and organises every legal matter handled by your organisation. It brings together documents, hearings, approvals and reports so that teams can collaborate efficiently and management gains full visibility.</p>
+</section>
+
+<section id="roles" class="page-break">
+    <h2>2. Access &amp; User Roles</h2>
+    <table>
+        <thead><tr><th>Role</th><th>Main Responsibilities</th><th>Typical Restrictions</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Admin</strong></td><td>
+                <ul><li>Manage users, roles &amp; reference data</li><li>View / edit all cases &amp; system logs</li><li>Run backups, configure email</li></ul>
+            </td><td>None – full access</td></tr>
+            <tr><td><strong>Supervisor</strong></td><td>
+                <ul><li>Monitor unit workload</li><li>Approve execution &amp; early closures</li><li>Generate performance reports</li></ul>
+            </td><td>Cannot modify system settings</td></tr>
+            <tr><td><strong>Lawyer</strong></td><td>
+                <ul><li>Create &amp; maintain assigned cases</li><li>File appeals &amp; update progress</li><li>Upload evidence</li></ul>
+            </td><td>Read-only to other lawyers’ cases</td></tr>
+            <tr><td><strong>Clerk</strong></td><td>
+                <ul><li>Log filings &amp; hearing dates</li><li>Enter court fees &amp; document numbers</li></ul>
+            </td><td>No approval privileges</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="login">
+    <h2>3. Getting Started</h2>
+    <h3>3.1 Logging In</h3>
+    <ol>
+        <li>Open the LCMS link in any modern browser.</li>
+        <li>Enter your registered <strong>email</strong> and <strong>password</strong>; click <em>Login</em>.</li>
+        <li>First-time users must set a new password and accept the privacy notice.</li>
+    </ol>
+    <h3>3.2 Navigating the Interface</h3>
+    <ul>
+        <li><strong>Sidebar</strong> – Modules such as <em>Cases</em>, <em>Approvals</em>, <em>Reports</em>.</li>
+        <li><strong>Bell Icon</strong> – In-app notifications.</li>
+        <li><strong>Search Bar</strong> – Quick lookup of cases or parties.</li>
+        <li><strong>Avatar Menu</strong> – Profile, password, notification preferences.</li>
+    </ul>
+</section>
+
+<section id="cases" class="page-break">
+    <h2>4. Managing Cases</h2>
+    <h3>4.1 Creating a Case</h3>
+    <ol>
+        <li>Click <em>Cases ▸ New</em>.</li>
+        <li>Select a <strong>Case Type</strong>; the form refreshes with specific fields.</li>
+        <li>Complete mandatory fields (star-marked) and click <em>Save</em>.</li>
+        <li>The case is placed in <strong>Open</strong> status and appears in your list.</li>
+    </ol>
+    <h3>4.2 Updating a Case</h3>
+    <ul>
+        <li>Use the <strong>Overview</strong>, <strong>Documents</strong>, <strong>Appeals</strong> and <strong>Timeline</strong> tabs to add information.</li>
+        <li>Click <em>Add Progress</em> to log hearings, payments or notes.</li>
+        <li>Drag &amp; drop files into the <em>Documents</em> tab (PDF, DOCX up to 8&nbsp;MB each).</li>
+    </ul>
+</section>
+
+<section id="forms">
+    <h2>5. Case Entry Forms</h2>
+
+    <h3 id="form-clean">5.1 Clean Loan Recovery</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Branch</td><td>Originating ORGANIZATION branch</td><td>Required</td></tr>
+            <tr><td>Internal File #</td><td>Organisation reference</td><td>Required · Unique</td></tr>
+            <tr><td>Outstanding Amount</td><td>Remaining loan balance</td><td>Required</td></tr>
+            <tr><td>Claimed Amount</td><td>Amount being claimed</td><td>Required</td></tr>
+            <tr><td>Court Name</td><td>Select from list</td><td>Required</td></tr>
+            <tr><td>Supporting Docs</td><td>Loan contract, statements</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+
+    <h3 id="form-secured">5.2 Secured Loan Recovery</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Collateral Type</td><td>Vehicle, property, etc.</td><td>Required</td></tr>
+            <tr><td>Collateral Value</td><td>Estimated market value</td><td>Required</td></tr>
+            <tr><td>Outstanding Amount</td><td>Remaining secured loan</td><td>Required</td></tr>
+            <tr><td>Branch</td><td>Originating branch</td><td>Required</td></tr>
+            <tr><td>Documents</td><td>Mortgage deed, title copy</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+
+    <h3 id="form-labor">5.3 Labor Case</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Work Unit</td><td>Employee’s division</td><td>Required</td></tr>
+            <tr><td>Employee Name</td><td>Complainant</td><td>Required</td></tr>
+            <tr><td>Claim Type</td><td>Dismissal, wage claim</td><td>Required</td></tr>
+            <tr><td>Claimed Amount</td><td>Damages sought</td><td>Optional</td></tr>
+            <tr><td>Industrial Court #</td><td>Court reference</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+
+    <h3 id="form-civil">5.4 Civil Case</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Court File #</td><td>Civil court reference</td><td>Required</td></tr>
+            <tr><td>Claim Description</td><td>Nature of dispute</td><td>Required</td></tr>
+            <tr><td>Claimed Amount</td><td>Monetary amount</td><td>Optional</td></tr>
+            <tr><td>Defendant Assets</td><td>Supporting evidence</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+
+    <h3 id="form-criminal">5.5 Criminal Case</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Offence Type</td><td>Fraud, embezzlement…</td><td>Required</td></tr>
+            <tr><td>Prosecutor Name</td><td>Assigned prosecutor</td><td>Required</td></tr>
+            <tr><td>Court Name</td><td>Criminal court</td><td>Required</td></tr>
+            <tr><td>Charge Sheet Ref.</td><td>Police reference</td><td>Optional</td></tr>
+            <tr><td>Supporting Evidence</td><td>Forensic reports</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+
+    <h3 id="form-advisory">5.6 Legal Advisory</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Description</th><th>Requirement</th></tr></thead>
+        <tbody>
+            <tr><td>Advisory Topic</td><td>Short headline</td><td>Required</td></tr>
+            <tr><td>Requested By</td><td>Department / person</td><td>Required</td></tr>
+            <tr><td>Background Details</td><td>Issue description</td><td>Required</td></tr>
+            <tr><td>Deadline</td><td>Date advice needed</td><td>Optional</td></tr>
+            <tr><td>Attachments</td><td>Relevant files</td><td>Optional</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="assignment" class="page-break">
+    <h2>6. Task Assignment &amp; Workload</h2>
+    <h3>6.1 Assigning Lawyers</h3>
+    <ol>
+        <li>Open the case and click <em>Edit Case</em>.</li>
+        <li>Search the <strong>Assignee</strong> dropdown; select a lawyer.</li>
+        <li>Click <em>Save</em>; the lawyer receives an email plus in-app alert.</li>
+    </ol>
+    <h3>6.2 Monitoring Workload</h3>
+    <ul>
+        <li>The <em>Dashboard</em> shows current load, overdue items and upcoming hearings.</li>
+        <li><em>Team View</em> lets Supervisors filter by branch, case type or SLA breach.</li>
+    </ul>
+</section>
+
+<section id="workflow">
+    <h2>7. Approval &amp; Workflow</h2>
+    <h3>7.1 Supervisor Approval</h3>
+    <ol>
+        <li>Navigate to <em>Approvals ▸ Pending</em>.</li>
+        <li>Open the case review panel: decision, financials, documents.</li>
+        <li>Choose <strong>Approve</strong> or <strong>Request Follow-Up</strong> (comment required).</li>
+        <li>Decision is time-stamped in the timeline and lawyer notified.</li>
+    </ol>
+    <h3>7.2 Early Closure</h3>
+    <p>Lawyers may request closure after settlement; the same Supervisor steps apply.</p>
+</section>
+
+<section id="notifications">
+    <h2>8. Notifications</h2>
+    <h3>8.1 Channels</h3>
+    <ul><li>Email</li><li>In-App (bell icon)</li></ul>
+    <h3>8.2 Common Events</h3>
+    <ul><li>New assignment</li><li>Hearing reminder (24 h)</li><li>Supervisor decision</li><li>Document comment</li></ul>
+    <h3>8.3 Preference Centre</h3>
+    <ol>
+        <li>Click avatar ▸ <em>Profile ▸ Notifications</em>.</li>
+        <li>Enable or disable email/in-app per event type.</li>
+    </ol>
+</section>
+
+<section id="audit" class="page-break">
+    <h2>9. Audit Logs</h2>
+    <h3>9.1 Viewing Logs</h3>
+    <ol>
+        <li>Open <em>System ▸ Audit Logs</em>.</li>
+        <li>Filter by user, date range or action type.</li>
+    </ol>
+    <h3>9.2 Exporting</h3>
+    <ul><li>Click <em>Export ▸ CSV</em>; large exports run in background and trigger a notification.</li></ul>
+</section>
+
+<section id="reports">
+    <h2>10. Search &amp; Reports</h2>
+    <h3>10.1 Searching Cases</h3>
+    <ol><li>Use global search or <em>Advanced Filters</em> (type, status, branch).</li></ol>
+    <h3>10.2 Key Reports</h3>
+    <ul><li>Case Ageing</li><li>Recovery Performance</li><li>Lawyer Workload</li></ul>
+    <h3>10.3 Export &amp; Schedule</h3>
+    <ol><li>Select report ▸ <em>Export ▸ PDF/Excel</em>.</li><li>Admins can schedule weekly emails for any report.</li></ol>
+</section>
+
+<section id="settings">
+    <h2>11. System Settings (Admin)</h2>
+    <h3>11.1 Reference Data</h3>
+    <ul><li>Branches</li><li>Courts</li><li>Work Units</li></ul>
+    <h3>11.2 User &amp; Role Management</h3>
+    <ol><li><em>Users ▸ Add User</em> – create account.</li><li>Assign roles; adjust permissions under <em>Roles</em>.</li></ol>
+    <h3>11.3 Backups</h3>
+    <ul><li><em>System ▸ Backups ▸ Run Now</em> – download ZIP file.</li></ul>
+    <h3>11.4 Email Configuration</h3>
+    <ol><li>Open <em>Environment</em>; enter SMTP details.</li><li>Click <em>Send Test</em>.</li></ol>
+</section>
+</main>
+
+<footer>
+    © 2025 LCMS – All rights reserved. Prepared for customer use. Rev. 1.0
+</footer>
+</body>
+</html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LCMS – User Guide</title>
+<style>
+    body{font-family:Segoe UI,Arial,sans-serif;margin:0;color:#222;background:#fff;line-height:1.6}
+    header{background:#0066a1;color:#fff;padding:40px 30px}
+    h1,h2,h3{margin:24px 0 12px;font-weight:600}
+    h1{font-size:32px}
+    h2{font-size:24px;border-bottom:3px solid #0066a1;padding-bottom:4px}
+    h3{font-size:18px;color:#0066a1}
+    nav{background:#f7f7f7;border-bottom:1px solid #ddd;padding:20px 30px}
+    nav ul{margin:0;padding-left:18px}
+    nav li{margin:4px 0}
+    section{padding:26px 40px}
+    table{border-collapse:collapse;width:100%;margin:12px 0}
+    th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:14px}
+    th{background:#f0f0f0;font-weight:600}
+    code{background:#f4f4f4;padding:2px 4px;font-size:90%}
+</style>
+</head>
+<body>
+<header>
+    <h1>Legal Case Management System (LCMS)</h1>
+    <p>Customer-Facing User Guide</p>
+</header>
+
+<nav>
+    <h2>Contents</h2>
+    <ul>
+        <li><a href="#overview">System Overview</a></li>
+        <li><a href="#roles">User Roles</a></li>
+        <li><a href="#login">Logging In</a></li>
+        <li><a href="#cases">Case Management</a></li>
+        <li><a href="#forms">Case Entry Forms</a></li>
+        <li><a href="#assignment">Task Assignment</a></li>
+        <li><a href="#approval">Approval Workflow</a></li>
+        <li><a href="#notifications">Notifications</a></li>
+        <li><a href="#audit">Audit Logs</a></li>
+        <li><a href="#reports">Reports &amp; Search</a></li>
+        <li><a href="#settings">System Settings</a></li>
+    </ul>
+</nav>
+
+<section id="overview">
+    <h2>System Overview</h2>
+    <p>The LCMS is an online platform that helps your organisation record, track and manage all legal matters in one place. From the moment a case is opened until it is closed, every document, hearing and decision is captured so nothing is missed.</p>
+</section>
+
+<section id="roles">
+    <h2>User Roles</h2>
+    <table>
+        <thead><tr><th>Role</th><th>What the Role Can Do</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Admin</strong></td>
+                <td>
+                    <ul>
+                        <li>Add and manage users, roles and system settings</li>
+                        <li>View and edit all cases</li>
+                        <li>Run backups and manage reference data (courts, branches)</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Lawyer</strong></td>
+                <td>
+                    <ul>
+                        <li>Create new cases and update progress for assigned cases</li>
+                        <li>Upload documents and evidence</li>
+                        <li>Submit appeals and view hearing schedules</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Supervisor</strong></td>
+                <td>
+                    <ul>
+                        <li>See all cases in their unit</li>
+                        <li>Approve or send back cases for follow-up</li>
+                        <li>Generate performance reports</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Clerk</strong></td>
+                <td>
+                    <ul>
+                        <li>Enter filings, court fees and document numbers</li>
+                        <li>Update hearing dates in the calendar</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="login">
+    <h2>Logging In</h2>
+    <ol>
+        <li>Open your web browser and go to the LCMS link provided by IT.</li>
+        <li>Enter your <strong>email</strong> and <strong>password</strong>, then click <em>Login</em>.</li>
+        <li>First-time users are prompted to change their password.</li>
+        <li>The main dashboard shows your open cases, tasks and notifications.</li>
+        <li>Use the left-hand menu to navigate between modules.</li>
+    </ol>
+</section>
+
+<section id="cases">
+    <h2>Case Management</h2>
+    <h3>Create a New Case</h3>
+    <ol>
+        <li>Click <em>Cases ▸ New Case</em>.</li>
+        <li>Select the <strong>Case Type</strong> (e.g., Clean Loan Recovery).</li>
+        <li>Fill in the required form fields (see next section for details).</li>
+        <li>Click <em>Save</em>. The case appears in your case list.</li>
+    </ol>
+    <h3>Edit &amp; Track a Case</h3>
+    <ul>
+        <li>Open the case from your list.</li>
+        <li>Use the <strong>Overview</strong>, <strong>Appeals</strong>, <strong>Documents</strong> and <strong>Timeline</strong> tabs to update information.</li>
+        <li>Click <em>Add Progress Update</em> to record hearings or notes.</li>
+    </ul>
+</section>
+
+<section id="forms">
+    <h2>Case Entry Forms</h2>
+
+    <h3>Clean Loan Recovery</h3>
+    <ul>
+        <li><strong>Branch</strong> – Select the ORGANIZATION branch that issued the loan (required).</li>
+        <li><strong>Internal File #</strong> – Organisation reference number (required).</li>
+        <li><strong>Outstanding Amount</strong> – Remaining loan balance.</li>
+        <li><strong>Claimed Amount</strong> – Amount being claimed in court.</li>
+        <li><strong>Court Name</strong> – Select from list.</li>
+        <li><strong>Supporting Documents</strong> – Upload loan contract, statements.</li>
+    </ul>
+
+    <h3>Labor Case</h3>
+    <ul>
+        <li><strong>Work Unit</strong> – The employee’s division (required).</li>
+        <li><strong>Employee Name</strong> – Full name of employee.</li>
+        <li><strong>Claim Type</strong> – Unlawful dismissal, wage claim, etc.</li>
+        <li><strong>Claimed Amount</strong> – If monetary damages are sought.</li>
+        <li><strong>Industrial Court #</strong> – Court reference number.</li>
+    </ul>
+
+    <h3>Civil Case</h3>
+    <ul>
+        <li><strong>Court File #</strong> – Civil court reference (required).</li>
+        <li><strong>Claim Description</strong> – Nature of dispute.</li>
+        <li><strong>Claimed Amount</strong> – Monetary amount, if any.</li>
+        <li><strong>Defendant Assets</strong> – Upload supporting evidence.</li>
+    </ul>
+
+    <h3>Secured Loan Recovery</h3>
+    <ul>
+        <li><strong>Collateral Type</strong> – Vehicle, property, etc.</li>
+        <li><strong>Collateral Value</strong> – Estimated value.</li>
+        <li><strong>Outstanding Amount</strong> – Remaining secured balance.</li>
+        <li><strong>Branch</strong> – Originating branch.</li>
+        <li><strong>Documents</strong> – Mortgage deeds, titles.</li>
+    </ul>
+
+    <h3>Legal Advisory</h3>
+    <ul>
+        <li><strong>Advisory Topic</strong> – Short title of the legal question.</li>
+        <li><strong>Requested By</strong> – Department or person seeking advice.</li>
+        <li><strong>Background Details</strong> – Description of issue.</li>
+        <li><strong>Deadline</strong> – When advice is needed.</li>
+        <li><strong>Attachments</strong> – Relevant documents.</li>
+    </ul>
+
+    <h3>Criminal Case</h3>
+    <ul>
+        <li><strong>Offence Type</strong> – Fraud, embezzlement, etc.</li>
+        <li><strong>Prosecutor Name</strong> – Assigned prosecutor.</li>
+        <li><strong>Court Name</strong> – Select criminal court.</li>
+        <li><strong>Charge Sheet Ref.</strong> – Police reference.</li>
+        <li><strong>Supporting Evidence</strong> – Upload forensic reports.</li>
+    </ul>
+</section>
+
+<section id="assignment">
+    <h2>Task Assignment</h2>
+
+    <h3>Assigning a Lawyer</h3>
+    <ol>
+        <li>Open the target case and click the <strong>Edit</strong> button.</li>
+        <li>Locate the <strong>Assignee</strong> field; start typing a lawyer's name to search.</li>
+        <li>Select the desired lawyer and click <em>Save</em>. The lawyer becomes the <em>Primary Handler</em>.</li>
+    </ol>
+
+    <h3>Re-assigning or Adding Co-Counsel</h3>
+    <ul>
+        <li>Supervisors can add a <strong>Secondary Lawyer</strong> under the <em>Team</em> tab.</li>
+        <li>Historical assignment changes are stored in the case timeline for traceability.</li>
+    </ul>
+
+    <h3>Tracking Progress</h3>
+    <ul>
+        <li>The dashboard displays each lawyer’s active load and due dates.</li>
+        <li>A colour-coded progress bar (0–100 %) reflects milestones completed.</li>
+        <li>Supervisors can filter the <em>Workload</em> view by branch, lawyer or case type.</li>
+    </ul>
+</section>
+
+<section id="approval">
+    <h2>Approval Workflow</h2>
+    <p>Certain stages (e.g., <em>Pending Execution</em>, early closure requests) require Supervisor sign-off before further action.</p>
+
+    <h3>Supervisor Steps</h3>
+    <ol>
+        <li>Go to <em>Approvals ▸ Pending</em>.</li>
+        <li>Click a row to open the <strong>Review Panel</strong> showing judgment summary, financials and attached documents.</li>
+        <li>Select an action:
+            <ul>
+                <li><strong>Approve</strong> – Moves the case to the next stage and notifies the lawyer.</li>
+                <li><strong>Request Follow-Up</strong> – Sends the case back to the lawyer with mandatory comments.</li>
+            </ul>
+        </li>
+        <li>The decision appears in the timeline with a timestamp and your name.</li>
+    </ol>
+
+    <h3>Early Closure</h3>
+    <p>If settlement occurs, lawyers can request <em>Early Closure</em>. The same approval steps apply.</p>
+</section>
+
+<section id="notifications">
+    <h2>Notifications</h2>
+    <h3>Channels</h3>
+    <ul>
+        <li><strong>Email</strong> – Immediate alerts for assignments and approvals.</li>
+        <li><strong>In-App</strong> – Bell icon shows unread messages.</li>
+    </ul>
+
+    <h3>Notification Types</h3>
+    <ul>
+        <li>New Case Assignment</li>
+        <li>Upcoming Hearing (24 h reminder)</li>
+        <li>Supervisor Decision</li>
+        <li>Document Comment or Mention</li>
+    </ul>
+
+    <h3>Managing Preferences</h3>
+    <ol>
+        <li>Click your avatar ▸ <em>Profile ▸ Notifications</em>.</li>
+        <li>Toggle email or in-app alerts per event type.</li>
+    </ol>
+</section>
+
+<section id="audit">
+    <h2>Audit Logs</h2>
+    <h3>Viewing Logs</h3>
+    <ol>
+        <li>Navigate to <em>System ▸ Audit Logs</em>.</li>
+        <li>Use filters for <strong>User</strong>, <strong>Date Range</strong> or <strong>Action</strong> (create, update, delete).</li>
+    </ol>
+
+    <h3>Exporting</h3>
+    <ul>
+        <li>Click <em>Export ▸ CSV</em> to download the current view.</li>
+        <li>Large exports run in the background; a notification appears when ready.</li>
+    </ul>
+</section>
+
+<section id="reports">
+    <h2>Reports &amp; Search</h2>
+    <h3>Searching Cases</h3>
+    <ol>
+        <li>Type a keyword in the top search bar (file #, party, lawyer).</li>
+        <li>Use <em>Advanced Filters</em> to narrow by case type, branch or status.</li>
+    </ol>
+
+    <h3>Generating Reports</h3>
+    <ul>
+        <li><strong>Case Ageing</strong> – Shows how long cases stay open.</li>
+        <li><strong>Recovery Performance</strong> – Compares claimed vs recovered amounts.</li>
+        <li><strong>Lawyer Workload</strong> – Lists active caseload per lawyer.</li>
+    </ul>
+
+    <h3>Exporting &amp; Scheduling</h3>
+    <ol>
+        <li>Select a report and click <em>Export</em> ▸ <em>PDF</em> or <em>Excel</em>.</li>
+        <li>Admins can schedule weekly emails of specific reports.</li>
+    </ol>
+</section>
+
+<section id="settings">
+    <h2>System Settings (Admins)</h2>
+
+    <h3>Reference Data</h3>
+    <ul>
+        <li><strong>Branches</strong> – Add or deactivate ORGANIZATION branches.</li>
+        <li><strong>Courts</strong> – Maintain court names and locations.</li>
+        <li><strong>Work Units</strong> – Update organisational divisions.</li>
+    </ul>
+
+    <h3>User &amp; Role Management</h3>
+    <ol>
+        <li>Open <em>Users ▸ Add User</em> to create an account.</li>
+        <li>Assign one or more roles (Lawyer, Supervisor, Clerk).</li>
+        <li>Use <em>Roles ▸ Permissions</em> to adjust capabilities.</li>
+    </ol>
+
+    <h3>Backups</h3>
+    <ul>
+        <li>Click <em>System ▸ Backups ▸ Run Now</em>.</li>
+        <li>Completed backups appear in the list with size and date.</li>
+    </ul>
+
+    <h3>Email Settings</h3>
+    <ol>
+        <li>Go to <em>Environment</em> tab.</li>
+        <li>Enter SMTP server, port, username and password.</li>
+        <li>Click <em>Send Test</em> to verify.</li>
+    </ol>
+</section>
+
+</body>
+</html>
+
+
+
+

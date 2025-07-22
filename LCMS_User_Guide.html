@@ -1,0 +1,2168 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>LCMS User Guide</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 0;
+            color: #333;
+        }
+        
+        /* Title Page Styles */
+        .title-page {
+            text-align: center;
+            padding: 100px 40px;
+            page-break-after: always;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .title-page h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .title-page .subtitle {
+            font-size: 1.8em;
+            margin-bottom: 50px;
+            font-weight: 200;
+            opacity: 0.9;
+        }
+        
+        .title-page .version {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .title-page .date {
+            font-size: 1.1em;
+            opacity: 0.7;
+        }
+        
+        /* Table of Contents Styles */
+        .toc-page {
+            padding: 40px;
+            page-break-after: always;
+            min-height: 100vh;
+        }
+        
+        .toc-page h2 {
+            font-size: 2.5em;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .toc-list li {
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ddd;
+        }
+        
+        .toc-list a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .toc-list a:hover {
+            color: #667eea;
+        }
+        
+        .toc-level-1 {
+            font-weight: bold;
+            font-size: 1.2em !important;
+        }
+        
+        .toc-level-2 {
+            margin-left: 20px;
+            font-size: 1.05em !important;
+        }
+        
+        .toc-level-3 {
+            margin-left: 40px;
+            font-size: 1em !important;
+            color: #666;
+        }
+        
+        /* Content Styles */
+        .content {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .content h1 {
+            font-size: 2.8em;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            page-break-before: always;
+        }
+        
+        .content h2 {
+            font-size: 2.2em;
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            page-break-before: always;
+        }
+        
+        .content h3 {
+            font-size: 1.8em;
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .content h4 {
+            font-size: 1.4em;
+            color: #666;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        
+        .content h5 {
+            font-size: 1.2em;
+            color: #777;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .content ul, .content ol {
+            margin-bottom: 20px;
+            padding-left: 30px;
+        }
+        
+        .content li {
+            margin-bottom: 8px;
+        }
+        
+        .content strong {
+            color: #667eea;
+        }
+        
+        /* Screenshot placeholder styles */
+        .screenshot {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .screenshot::before {
+            content: "📷 ";
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        /* Code and pre styles */
+        code {
+            background-color: #f1f3f4;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        
+        /* Table styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        /* Print styles */
+        @media print {
+            .title-page, .toc-page, .content h1, .content h2 {
+                page-break-before: always;
+            }
+            
+            .content h3, .content h4 {
+                page-break-after: avoid;
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .title-page, .toc-page, .content {
+                padding: 20px;
+            }
+            
+            .title-page h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TITLE PAGE -->
+<div class="title-page">
+    <h1>Legal Case Management System</h1>
+    <div class="subtitle">Comprehensive User Guide</div>
+    <div class="version">Version 2.0</div>
+    <div class="date">January 2025</div>
+</div>
+
+<!-- TABLE OF CONTENTS PAGE -->
+<div class="toc-page">
+    <h2>Table of Contents</h2>
+    <ul class="toc-list">
+        <li><a href="#system-overview" class="toc-level-1">1. System Overview <span>3</span></a></li>
+        <li><a href="#user-roles-and-permissions" class="toc-level-1">2. User Roles and Permissions <span>4</span></a></li>
+        <li><a href="#getting-started" class="toc-level-1">3. Getting Started <span>6</span></a></li>
+        <li><a href="#system-requirements" class="toc-level-2">3.1 System Requirements <span>6</span></a></li>
+        <li><a href="#first-time-setup" class="toc-level-2">3.2 First-Time Setup <span>7</span></a></li>
+        <li><a href="#login-process" class="toc-level-2">3.3 Login Process <span>8</span></a></li>
+        <li><a href="#dashboard-navigation" class="toc-level-2">3.4 Dashboard Navigation <span>10</span></a></li>
+        <li><a href="#managing-cases" class="toc-level-1">4. Case Management <span>13</span></a></li>
+        <li><a href="#case-creation-workflow" class="toc-level-2">4.1 Case Creation Workflow <span>13</span></a></li>
+        <li><a href="#advanced-case-tracking" class="toc-level-2">4.2 Case Tracking and Monitoring <span>16</span></a></li>
+        <li><a href="#case-status-lifecycle" class="toc-level-2">4.3 Case Status Management <span>18</span></a></li>
+        <li><a href="#appeal-management" class="toc-level-2">4.4 Appeal Management <span>20</span></a></li>
+        <li><a href="#case-entry-forms" class="toc-level-1">5. Case Entry Forms <span>23</span></a></li>
+        <li><a href="#workflow-and-approvals" class="toc-level-1">6. Workflow and Approvals <span>24</span></a></li>
+        <li><a href="#document-management" class="toc-level-1">7. Document Management <span>26</span></a></li>
+        <li><a href="#document-storage-organization" class="toc-level-2">7.1 Document Storage <span>26</span></a></li>
+        <li><a href="#version-control-system" class="toc-level-2">7.2 Version Control <span>28</span></a></li>
+        <li><a href="#document-security-access" class="toc-level-2">7.3 Security and Access <span>30</span></a></li>
+        <li><a href="#communication-and-chat" class="toc-level-1">8. Communication System <span>32</span></a></li>
+        <li><a href="#real-time-messaging" class="toc-level-2">8.1 Real-Time Messaging <span>32</span></a></li>
+        <li><a href="#video-audio-conferencing" class="toc-level-2">8.2 Video Conferencing <span>34</span></a></li>
+        <li><a href="#external-communication" class="toc-level-2">8.3 External Communication <span>35</span></a></li>
+        <li><a href="#notifications-and-alerts" class="toc-level-1">9. Notifications and Alerts <span>37</span></a></li>
+        <li><a href="#reporting-and-analytics" class="toc-level-1">10. Reporting and Analytics <span>40</span></a></li>
+        <li><a href="#standard-reports" class="toc-level-2">10.1 Standard Reports <span>40</span></a></li>
+        <li><a href="#custom-reporting" class="toc-level-2">10.2 Custom Report Builder <span>42</span></a></li>
+        <li><a href="#analytics-dashboard" class="toc-level-2">10.3 Analytics Dashboard <span>44</span></a></li>
+        <li><a href="#advanced-case-operations" class="toc-level-1">11. Advanced Operations <span>46</span></a></li>
+        <li><a href="#system-integration-features" class="toc-level-1">12. System Integration <span>49</span></a></li>
+        <li><a href="#mobile-accessibility" class="toc-level-1">13. Mobile Access <span>52</span></a></li>
+        <li><a href="#training-and-support" class="toc-level-1">14. Training and Support <span>54</span></a></li>
+        <li><a href="#audit-logs-and-compliance" class="toc-level-1">15. Audit and Compliance <span>56</span></a></li>
+        <li><a href="#system-administration" class="toc-level-1">16. System Administration <span>58</span></a></li>
+    </ul>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+<h1 id="system-overview">System Overview</h1>
+<div class="screenshot">System Overview Dashboard</div>
+<p>The Legal Case Management System (LCMS) is a comprehensive, web-based application designed to streamline and centralize legal case management for organizations. Built on the Laravel framework with a Vue.js frontend, LCMS provides functionality for managing the entire case lifecycle from initiation to closure.</p>
+
+<p>LCMS serves as the central hub for all legal operations, providing a unified platform that integrates case management, document handling, communication, reporting, and compliance tracking. The system is designed to enhance productivity, ensure regulatory compliance, and provide comprehensive insights into legal operations.</p>
+
+<h3 id="key-features">Key System Features</h3>
+<ul>
+<li><strong>Comprehensive Case Management:</strong> End-to-end case lifecycle management from initiation to resolution</li>
+<li><strong>Multi-User Collaboration:</strong> Role-based access control with seamless team collaboration</li>
+<li><strong>Document Management:</strong> Secure document storage with version control and collaborative editing</li>
+<li><strong>Real-Time Communication:</strong> Integrated messaging, video conferencing, and notification systems</li>
+<li><strong>Advanced Reporting:</strong> Comprehensive analytics and customizable reporting capabilities</li>
+<li><strong>Mobile Accessibility:</strong> Full mobile support for remote access and field work</li>
+<li><strong>Integration Capabilities:</strong> Seamless integration with court systems and external services</li>
+<li><strong>Compliance and Audit:</strong> Complete audit trails and regulatory compliance features</li>
+</ul>
+
+<h3 id="system-architecture">System Architecture</h3>
+<div class="screenshot">System Architecture Diagram</div>
+<p>LCMS is built on a modern, scalable architecture that ensures reliability, security, and performance:</p>
+<ul>
+<li><strong>Frontend:</strong> Vue.js with responsive design for optimal user experience</li>
+<li><strong>Backend:</strong> Laravel PHP framework with RESTful API architecture</li>
+<li><strong>Database:</strong> MySQL with optimized indexing and backup strategies</li>
+<li><strong>Security:</strong> Multi-layer security with encryption, authentication, and authorization</li>
+<li><strong>Cloud Integration:</strong> Scalable cloud infrastructure with automatic backup and recovery</li>
+</ul>
+<h2 id="user-roles-and-permissions">User Roles and Permissions</h2>
+<div class="screenshot">User Roles and Permissions Matrix</div>
+<p>The system features comprehensive role-based access control (RBAC), providing different permissions and functionality tailored to each organizational role. This ensures data security, workflow efficiency, and appropriate access levels for all users.</p>
+<h3 id="administrator">Administrator</h3>
+<ul>
+<li><strong>Access:</strong> Full system access including user management, system configuration, and report generation.</li>
+<li><strong>Functions:</strong> Create and manage user accounts, view complete audit logs, manage all cases.</li>
+</ul>
+<h3 id="supervisor">Supervisor</h3>
+<ul>
+<li><strong>Access:</strong> Case management and oversight with authority to approve closures and settlements.</li>
+<li><strong>Functions:</strong> Assign cases, track progress, and ensure compliance.</li>
+</ul>
+<h3 id="lawyer">Lawyer</h3>
+<ul>
+<li><strong>Access:</strong> Assigned cases management and documentation.</li>
+<li><strong>Functions:</strong> Create and manage cases, upload evidence, participate in communications.</li>
+</ul>
+<h3 id="clerk">Clerk</h3>
+<ul>
+<li><strong>Access:</strong> Limited to data entry and basic case updates.</li>
+<li><strong>Functions:</strong> Log court filings, update hearings.</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<div class="screenshot">Getting Started Welcome Screen</div>
+
+<h3 id="system-requirements">System Requirements</h3>
+<div class="screenshot">System Requirements Checklist</div>
+<h4 id="browser-compatibility">Browser Compatibility</h4>
+<ul>
+<li><strong>Recommended Browsers:</strong> Chrome 90+, Firefox 88+, Safari 14+, Edge 90+</li>
+<li><strong>Screen Resolution:</strong> Minimum 1024x768, Recommended 1920x1080</li>
+<li><strong>Internet Connection:</strong> Stable broadband connection required</li>
+<li><strong>JavaScript:</strong> Must be enabled for full functionality</li>
+</ul>
+
+<h4 id="mobile-requirements">Mobile Device Requirements</h4>
+<ul>
+<li><strong>iOS:</strong> iOS 13.0 or later</li>
+<li><strong>Android:</strong> Android 8.0 (API level 26) or later</li>
+<li><strong>Mobile Browsers:</strong> Safari Mobile, Chrome Mobile, Samsung Internet</li>
+</ul>
+
+<h3 id="first-time-setup">First-Time Setup and Account Activation</h3>
+<div class="screenshot">Account Activation Process</div>
+
+<h4 id="account-activation">Account Activation Process</h4>
+<ol>
+<li><strong>Receive Invitation:</strong>
+   <ul>
+   <li>Check your email for the LCMS account invitation</li>
+   <li>Click on the activation link within 24 hours</li>
+   <li>If link expires, contact your system administrator</li>
+   </ul>
+</li>
+<li><strong>Initial Login Setup:</strong>
+   <ul>
+   <li>Enter the temporary username provided</li>
+   <li>Use the temporary password from the invitation email</li>
+   <li>Complete the security verification process</li>
+   </ul>
+</li>
+<li><strong>Password Creation:</strong>
+   <ul>
+   <li>Create a strong password (minimum 8 characters)</li>
+   <li>Include uppercase, lowercase, numbers, and special characters</li>
+   <li>Password cannot match previous 5 passwords</li>
+   <li>Confirm password and save changes</li>
+   </ul>
+</li>
+<li><strong>Security Questions Setup:</strong>
+   <ul>
+   <li>Select 3 security questions from the provided list</li>
+   <li>Provide answers that you will remember</li>
+   <li>These will be used for password recovery</li>
+   </ul>
+</li>
+</ol>
+
+<h3 id="login-process">Detailed Login Process</h3>
+<div class="screenshot">Login Interface</div>
+
+<h4 id="standard-login">Standard Login Procedure</h4>
+<ol>
+<li><strong>Access the System:</strong>
+   <ul>
+   <li>Navigate to the LCMS URL provided by your administrator</li>
+   <li>Bookmark the URL for easy access</li>
+   <li>Ensure you're using a secure connection (HTTPS)</li>
+   </ul>
+</li>
+<li><strong>Enter Credentials:</strong>
+   <ul>
+   <li>Input your username (case-sensitive)</li>
+   <li>Enter your password securely</li>
+   <li>Select "Remember Me" if using a personal device</li>
+   </ul>
+</li>
+<li><strong>Two-Factor Authentication (if enabled):</strong>
+   <div class="screenshot">Two-Factor Authentication Setup</div>
+   <ul>
+   <li>Enter the 6-digit code from your authenticator app</li>
+   <li>Or enter the code sent to your registered mobile number</li>
+   <li>Click "Verify" to complete authentication</li>
+   </ul>
+</li>
+<li><strong>First Login Requirements:</strong>
+   <ul>
+   <li>Change temporary password immediately</li>
+   <li>Review and accept terms of service</li>
+   <li>Complete profile information</li>
+   <li>Set notification preferences</li>
+   </ul>
+</li>
+</ol>
+
+<h4 id="password-recovery">Password Recovery Process</h4>
+<div class="screenshot">Password Recovery Process</div>
+<ol>
+<li><strong>Initiate Recovery:</strong> Click "Forgot Password" on login screen</li>
+<li><strong>Identity Verification:</strong> Enter your username or email address</li>
+<li><strong>Security Questions:</strong> Answer your pre-configured security questions</li>
+<li><strong>Reset Options:</strong> Choose email link or SMS code for password reset</li>
+<li><strong>Create New Password:</strong> Follow the secure password requirements</li>
+</ol>
+
+<h3 id="dashboard-navigation">Comprehensive Dashboard Navigation</h3>
+<div class="screenshot">Main Dashboard Overview</div>
+
+<h4 id="dashboard-layout">Dashboard Layout and Components</h4>
+<ul>
+<li><strong>Header Bar:</strong>
+   <ul>
+   <li>System logo and organization name</li>
+   <li>Global search functionality</li>
+   <li>Notification bell with badge counter</li>
+   <li>User profile dropdown menu</li>
+   <li>Quick action buttons</li>
+   </ul>
+</li>
+<li><strong>Sidebar Navigation:</strong>
+   <div class="screenshot">Sidebar Navigation Menu</div>
+   <ul>
+   <li><strong>Dashboard:</strong> Main overview and statistics</li>
+   <li><strong>Cases:</strong> Case management and creation</li>
+   <li><strong>Documents:</strong> Document library and management</li>
+   <li><strong>Calendar:</strong> Court dates and appointments</li>
+   <li><strong>Reports:</strong> Analytics and reporting tools</li>
+   <li><strong>Chat:</strong> Internal communication system</li>
+   <li><strong>Administration:</strong> System settings (admin only)</li>
+   </ul>
+</li>
+<li><strong>Main Content Area:</strong>
+   <ul>
+   <li>Dynamic content based on selected module</li>
+   <li>Breadcrumb navigation</li>
+   <li>Action buttons and filters</li>
+   <li>Data tables and visualization</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="dashboard-widgets">Dashboard Widgets and Statistics</h4>
+<div class="screenshot">Dashboard Widgets and Statistics</div>
+<ul>
+<li><strong>Case Statistics Cards:</strong>
+   <ul>
+   <li>Total active cases</li>
+   <li>Cases assigned to you</li>
+   <li>Overdue cases requiring attention</li>
+   <li>Cases closed this month</li>
+   </ul>
+</li>
+<li><strong>Performance Metrics:</strong>
+   <ul>
+   <li>Average case resolution time</li>
+   <li>Success rate percentage</li>
+   <li>Recovery amount statistics</li>
+   <li>Workload distribution charts</li>
+   </ul>
+</li>
+<li><strong>Recent Activity Feed:</strong>
+   <ul>
+   <li>Latest case updates</li>
+   <li>Document uploads</li>
+   <li>Status changes</li>
+   <li>System notifications</li>
+   </ul>
+</li>
+<li><strong>Quick Actions Panel:</strong>
+   <ul>
+   <li>Create new case</li>
+   <li>Upload documents</li>
+   <li>Schedule appointment</li>
+   <li>Generate report</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="customizing-dashboard">Customizing Your Dashboard</h4>
+<div class="screenshot">Dashboard Customization Options</div>
+<ol>
+<li><strong>Widget Management:</strong>
+   <ul>
+   <li>Add or remove dashboard widgets</li>
+   <li>Resize and reposition widgets</li>
+   <li>Configure widget refresh intervals</li>
+   </ul>
+</li>
+<li><strong>Theme Settings:</strong>
+   <ul>
+   <li>Choose between light and dark themes</li>
+   <li>Adjust font size for accessibility</li>
+   <li>Set color preferences</li>
+   </ul>
+</li>
+<li><strong>Notification Preferences:</strong>
+   <ul>
+   <li>Configure email notifications</li>
+   <li>Set SMS alert preferences</li>
+   <li>Customize in-app notification settings</li>
+   </ul>
+</li>
+</ol>
+<h2 id="managing-cases">Comprehensive Case Management</h2>
+<div class="screenshot">Case Management Overview</div>
+
+<h3 id="case-creation-workflow">Detailed Case Creation Workflow</h3>
+<div class="screenshot">Case Creation Wizard Interface</div>
+
+<h4 id="step-by-step-case-creation">Step-by-Step Case Creation Process</h4>
+<ol>
+<li><strong>Access Case Creation:</strong>
+   <ul>
+   <li>Navigate to Cases → Create New Case from the main menu</li>
+   <li>Or click the "+ New Case" button on the dashboard</li>
+   <li>Or use the quick action shortcut (Ctrl+N)</li>
+   </ul>
+</li>
+<li><strong>Select Case Type:</strong>
+   <div class="screenshot">Case Type Selection Screen</div>
+   <ul>
+   <li><strong>Clean Loan Recovery (Code: 01):</strong> For loan recovery without collateral</li>
+   <li><strong>Labor Litigation (Code: 02):</strong> Employment-related legal disputes</li>
+   <li><strong>Other Civil Litigation (Code: 03):</strong> General civil matters</li>
+   <li><strong>Criminal Cases (Code: 04):</strong> Criminal law proceedings</li>
+   <li><strong>Secured Loan Recovery (Code: 05):</strong> Collateral-backed loan recovery</li>
+   <li><strong>Legal Advisory (Code: 06):</strong> Legal consultation and advice</li>
+   </ul>
+</li>
+<li><strong>Basic Case Information:</strong>
+   <div class="screenshot">Basic Case Information Form</div>
+   <ul>
+   <li><strong>Case Title:</strong> Descriptive title for easy identification</li>
+   <li><strong>Internal File Number:</strong> Organization's internal reference</li>
+   <li><strong>Branch/Work Unit:</strong> Originating department or branch</li>
+   <li><strong>Priority Level:</strong> High, Medium, or Low priority</li>
+   <li><strong>Expected Resolution Date:</strong> Target completion date</li>
+   <li><strong>Case Description:</strong> Detailed summary of the matter</li>
+   </ul>
+</li>
+<li><strong>Party Information:</strong>
+   <div class="screenshot">Party Information Entry Form</div>
+   <ul>
+   <li><strong>Plaintiff Details:</strong>
+     <ul>
+     <li>Full legal name</li>
+     <li>Contact information (phone, email, address)</li>
+     <li>Legal representative details</li>
+     <li>Identification documents</li>
+     </ul>
+   </li>
+   <li><strong>Defendant Details:</strong>
+     <ul>
+     <li>Full legal name or business name</li>
+     <li>Contact information and addresses</li>
+     <li>Legal counsel information</li>
+     <li>Business registration details (if applicable)</li>
+     </ul>
+   </li>
+   </ul>
+</li>
+<li><strong>Financial Information (if applicable):</strong>
+   <ul>
+   <li><strong>Claim Amount:</strong> Total amount being claimed</li>
+   <li><strong>Outstanding Balance:</strong> Current amount owed</li>
+   <li><strong>Interest Rate:</strong> Applicable interest rates</li>
+   <li><strong>Payment History:</strong> Previous payment records</li>
+   </ul>
+</li>
+<li><strong>Document Attachment:</strong>
+   <p><img alt="Screenshot: Document Upload Interface" src="#" /></p>
+   <ul>
+   <li>Upload initial case documents</li>
+   <li>Categorize documents by type</li>
+   <li>Add document descriptions</li>
+   <li>Set access permissions</li>
+   </ul>
+</li>
+<li><strong>Case Assignment:</strong>
+   <ul>
+   <li>Select assigned lawyer from dropdown</li>
+   <li>Set supervisor for oversight</li>
+   <li>Add assignment notes and instructions</li>
+   <li>Configure notification settings</li>
+   </ul>
+</li>
+<li><strong>Review and Save:</strong>
+   <ul>
+   <li>Review all entered information</li>
+   <li>Validate required fields</li>
+   <li>Save as draft or submit for approval</li>
+   <li>Generate case number automatically</li>
+   </ul>
+</li>
+</ol>
+
+<h3 id="advanced-case-tracking">Advanced Case Tracking and Monitoring</h3>
+<div class="screenshot">Case Tracking Dashboard</div>
+
+<h4 id="timeline-visualization">Timeline Visualization and Milestones</h4>
+<div class="screenshot">Case Timeline Visualization</div>
+<ul>
+<li><strong>Visual Timeline Features:</strong>
+   <ul>
+   <li>Chronological view of all case activities</li>
+   <li>Color-coded events by type and importance</li>
+   <li>Milestone markers for key achievements</li>
+   <li>Deadline indicators and overdue alerts</li>
+   </ul>
+</li>
+<li><strong>Timeline Events Include:</strong>
+   <ul>
+   <li>Case creation and assignment</li>
+   <li>Document uploads and modifications</li>
+   <li>Status changes and approvals</li>
+   <li>Court filings and hearings</li>
+   <li>Settlement negotiations</li>
+   <li>Payment receipts and recoveries</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="case-status-management">Comprehensive Case Status Management</h4>
+<p><img alt="Screenshot: Status Management Panel" src="#" /></p>
+<ul>
+<li><strong>Status Categories and Workflows:</strong>
+   <ul>
+   <li><strong>Draft:</strong> Case being prepared, not yet active</li>
+   <li><strong>Open:</strong> Active case requiring attention</li>
+   <li><strong>In Progress:</strong> Case actively being worked on</li>
+   <li><strong>Under Review:</strong> Pending supervisor or legal review</li>
+   <li><strong>Awaiting Court:</strong> Scheduled for court proceedings</li>
+   <li><strong>Settlement Negotiation:</strong> In active settlement discussions</li>
+   <li><strong>Appeal Process:</strong> Under appeal or preparing for appeal</li>
+   <li><strong>Suspended:</strong> Temporarily halted</li>
+   <li><strong>Closed - Successful:</strong> Favorable resolution achieved</li>
+   <li><strong>Closed - Unsuccessful:</strong> Unfavorable outcome</li>
+   <li><strong>Closed - Settled:</strong> Resolved through settlement</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="progress-updates">Progress Updates and Notes</h4>
+<p><img alt="Screenshot: Progress Update Form" src="#" /></p>
+<ol>
+<li><strong>Adding Progress Updates:</strong>
+   <ul>
+   <li>Click "Add Update" from the case details page</li>
+   <li>Select update type (Status Change, Court Filing, Meeting, etc.)</li>
+   <li>Enter detailed description of progress</li>
+   <li>Attach supporting documents if needed</li>
+   <li>Set follow-up reminders</li>
+   </ul>
+</li>
+<li><strong>Update Categories:</strong>
+   <ul>
+   <li><strong>Court Activities:</strong> Hearings, filings, judgments</li>
+   <li><strong>Client Communications:</strong> Meetings, calls, correspondence</li>
+   <li><strong>Document Activities:</strong> Drafting, reviewing, filing</li>
+   <li><strong>Settlement Activities:</strong> Negotiations, offers, agreements</li>
+   <li><strong>Administrative:</strong> Internal processes, approvals</li>
+   </ul>
+</li>
+</ol>
+
+<h4 id="appointment-scheduling">Appointment and Calendar Management</h4>
+<p><img alt="Screenshot: Calendar Integration" src="#" /></p>
+<ul>
+<li><strong>Scheduling Features:</strong>
+   <ul>
+   <li>Integrate with court calendar systems</li>
+   <li>Schedule client meetings and consultations</li>
+   <li>Set automatic reminders and notifications</li>
+   <li>Coordinate with multiple participants</li>
+   <li>Sync with personal and team calendars</li>
+   </ul>
+</li>
+<li><strong>Appointment Types:</strong>
+   <ul>
+   <li><strong>Court Hearings:</strong> Scheduled court appearances</li>
+   <li><strong>Client Meetings:</strong> Face-to-face or virtual consultations</li>
+   <li><strong>Depositions:</strong> Witness testimony sessions</li>
+   <li><strong>Settlement Conferences:</strong> Mediation and negotiation meetings</li>
+   <li><strong>Internal Reviews:</strong> Team meetings and case reviews</li>
+   </ul>
+</li>
+</ul>
+<h2 id="case-entry-forms">Case Entry Forms</h2>
+<p>Each case type includes specific forms with required fields.</p>
+<h3 id="clean-loan-recovery">Clean Loan Recovery</h3>
+<ul>
+<li><strong>Fields:</strong> Branch, Internal File #, Outstanding Amount.</li>
+<li><strong>Documents:</strong> Loan agreements, statements.</li>
+</ul>
+<h3 id="labor-litigation">Labor Litigation</h3>
+<ul>
+<li><strong>Fields:</strong> Work Unit, Employee Name, Claim Type.</li>
+<li><strong>Documents:</strong> Contracts, grievances.</li>
+</ul>
+<h2 id="workflow-and-approvals">Workflow and Approvals</h2>
+<p><img alt="Screenshot: Workflow and Approvals" src="#" /></p>
+<h3 id="supervisor-approval">Supervisor Approval</h3>
+<p>The supervisor can review cases pending execution or closure from the panel.
+They can approve or request further information based on case documentation.</p>
+<h2 id="document-management">Comprehensive Document Management System</h2>
+<p><img alt="Screenshot: Document Management" src="#" /></p>
+
+<h3 id="document-storage-organization">Document Storage and Organization</h3>
+<p><img alt="Screenshot: Document Library" src="#" /></p>
+
+<h4 id="document-categories">Document Categories and Types</h4>
+<ul>
+<li><strong>Legal Documents:</strong>
+   <ul>
+   <li>Pleadings and motions</li>
+   <li>Court orders and judgments</li>
+   <li>Legal briefs and memoranda</li>
+   <li>Settlement agreements</li>
+   <li>Appeal documents</li>
+   </ul>
+</li>
+<li><strong>Evidence and Discovery:</strong>
+   <ul>
+   <li>Witness statements and depositions</li>
+   <li>Expert reports and opinions</li>
+   <li>Photographs and multimedia evidence</li>
+   <li>Financial records and statements</li>
+   <li>Correspondence and communications</li>
+   </ul>
+</li>
+<li><strong>Administrative Documents:</strong>
+   <ul>
+   <li>Case intake forms</li>
+   <li>Client agreements and retainers</li>
+   <li>Internal memos and notes</li>
+   <li>Time tracking and billing records</li>
+   <li>Compliance and audit documents</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="document-upload-process">Document Upload and Processing</h4>
+<p><img alt="Screenshot: Document Upload Interface" src="#" /></p>
+<ol>
+<li><strong>Upload Methods:</strong>
+   <ul>
+   <li>Drag and drop interface</li>
+   <li>Browse and select files</li>
+   <li>Bulk upload for multiple files</li>
+   <li>Email-to-case functionality</li>
+   <li>Scanner integration</li>
+   </ul>
+</li>
+<li><strong>Document Processing:</strong>
+   <ul>
+   <li>Automatic file format conversion</li>
+   <li>OCR (Optical Character Recognition) for scanned documents</li>
+   <li>Metadata extraction and indexing</li>
+   <li>Virus scanning and security checks</li>
+   <li>File size optimization</li>
+   </ul>
+</li>
+<li><strong>Document Categorization:</strong>
+   <ul>
+   <li>Automatic categorization based on content</li>
+   <li>Manual category assignment</li>
+   <li>Tag-based organization system</li>
+   <li>Custom folder structures</li>
+   <li>Date-based filing</li>
+   </ul>
+</li>
+</ol>
+
+<h3 id="version-control-system">Advanced Version Control System</h3>
+<p><img alt="Screenshot: Version Control Interface" src="#" /></p>
+
+<h4 id="version-tracking-features">Version Tracking Features</h4>
+<ul>
+<li><strong>Automatic Versioning:</strong>
+   <ul>
+   <li>Every document edit creates a new version</li>
+   <li>Version numbering system (v1.0, v1.1, v2.0)</li>
+   <li>Timestamp and user attribution</li>
+   <li>Change summary and comments</li>
+   </ul>
+</li>
+<li><strong>Version Comparison:</strong>
+   <ul>
+   <li>Side-by-side document comparison</li>
+   <li>Highlight changes and differences</li>
+   <li>Track additions, deletions, and modifications</li>
+   <li>Comment and annotation tracking</li>
+   </ul>
+</li>
+<li><strong>Version Management:</strong>
+   <ul>
+   <li>Rollback to previous versions</li>
+   <li>Merge different versions</li>
+   <li>Branch and merge workflows</li>
+   <li>Version approval processes</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="collaborative-editing-features">Collaborative Editing Features</h4>
+<p><img alt="Screenshot: Collaborative Editing" src="#" /></p>
+<ul>
+<li><strong>Real-time Collaboration:</strong>
+   <ul>
+   <li>Multiple users editing simultaneously</li>
+   <li>Live cursor tracking</li>
+   <li>Real-time change synchronization</li>
+   <li>Conflict resolution mechanisms</li>
+   </ul>
+</li>
+<li><strong>Review and Approval Workflow:</strong>
+   <ul>
+   <li>Document review assignments</li>
+   <li>Approval routing and notifications</li>
+   <li>Comment and suggestion system</li>
+   <li>Final approval and lock functionality</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="document-security-access">Document Security and Access Control</h3>
+<p><img alt="Screenshot: Document Security Settings" src="#" /></p>
+
+<h4 id="security-features">Security Features</h4>
+<ul>
+<li><strong>Encryption and Protection:</strong>
+   <ul>
+   <li>AES-256 encryption for stored documents</li>
+   <li>SSL/TLS encryption for data transmission</li>
+   <li>Digital signatures and certificates</li>
+   <li>Watermarking for sensitive documents</li>
+   </ul>
+</li>
+<li><strong>Access Control:</strong>
+   <ul>
+   <li>Role-based document permissions</li>
+   <li>User-specific access rights</li>
+   <li>Time-limited access grants</li>
+   <li>IP-based access restrictions</li>
+   </ul>
+</li>
+<li><strong>Audit and Compliance:</strong>
+   <ul>
+   <li>Complete access audit trails</li>
+   <li>Document view and download tracking</li>
+   <li>Compliance with legal hold requirements</li>
+   <li>Data retention policy enforcement</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="backup-recovery">Backup and Recovery</h4>
+<p><img alt="Screenshot: Backup Management" src="#" /></p>
+<ul>
+<li><strong>Backup Strategy:</strong>
+   <ul>
+   <li>Automated daily backups</li>
+   <li>Multiple backup locations</li>
+   <li>Incremental and full backup options</li>
+   <li>Cloud and on-premise backup storage</li>
+   </ul>
+</li>
+<li><strong>Recovery Options:</strong>
+   <ul>
+   <li>Point-in-time recovery</li>
+   <li>Individual file restoration</li>
+   <li>Bulk recovery operations</li>
+   <li>Disaster recovery procedures</li>
+   </ul>
+</li>
+</ul>
+<h2 id="communication-and-chat">Advanced Communication and Collaboration System</h2>
+<p><img alt="Screenshot: Communication and Chat" src="#" /></p>
+
+<h3 id="real-time-messaging">Real-Time Messaging System</h3>
+<p><img alt="Screenshot: Chat Interface" src="#" /></p>
+
+<h4 id="messaging-features">Core Messaging Features</h4>
+<ul>
+<li><strong>Instant Messaging:</strong>
+   <ul>
+   <li>Real-time message delivery</li>
+   <li>Read receipts and delivery confirmations</li>
+   <li>Typing indicators</li>
+   <li>Message search and history</li>
+   <li>Emoji and reaction support</li>
+   </ul>
+</li>
+<li><strong>File Sharing and Collaboration:</strong>
+   <ul>
+   <li>Drag-and-drop file sharing</li>
+   <li>Document preview in chat</li>
+   <li>Version control integration</li>
+   <li>File access permissions</li>
+   <li>Collaborative document editing</li>
+   </ul>
+</li>
+<li><strong>Message Organization:</strong>
+   <ul>
+   <li>Message threading and replies</li>
+   <li>Message pinning and bookmarks</li>
+   <li>Message categories and tags</li>
+   <li>Advanced search and filtering</li>
+   <li>Message archiving</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="conversation-types">Conversation Types and Management</h4>
+<p><img alt="Screenshot: Conversation Management" src="#" /></p>
+<ul>
+<li><strong>Private Conversations:</strong>
+   <ul>
+   <li>One-on-one messaging</li>
+   <li>Confidential communication</li>
+   <li>End-to-end encryption options</li>
+   <li>Self-destructing messages</li>
+   </ul>
+</li>
+<li><strong>Group Conversations:</strong>
+   <ul>
+   <li>Team and project-based groups</li>
+   <li>Case-specific discussion groups</li>
+   <li>Department-wide communications</li>
+   <li>Temporary project groups</li>
+   </ul>
+</li>
+<li><strong>Channel Management:</strong>
+   <ul>
+   <li>Public and private channels</li>
+   <li>Channel moderation tools</li>
+   <li>Member management and permissions</li>
+   <li>Channel archiving and deletion</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="video-audio-conferencing">Video and Audio Conferencing</h3>
+<p><img alt="Screenshot: Video Conferencing" src="#" /></p>
+
+<h4 id="conferencing-features">Conferencing Capabilities</h4>
+<ul>
+<li><strong>Video Conferencing:</strong>
+   <ul>
+   <li>HD video calls with multiple participants</li>
+   <li>Screen sharing and presentation mode</li>
+   <li>Virtual backgrounds and filters</li>
+   <li>Recording and playback functionality</li>
+   <li>Meeting scheduling and calendar integration</li>
+   </ul>
+</li>
+<li><strong>Audio Conferencing:</strong>
+   <ul>
+   <li>High-quality voice calls</li>
+   <li>Conference call management</li>
+   <li>Mute and unmute controls</li>
+   <li>Call recording and transcription</li>
+   <li>Phone bridge integration</li>
+   </ul>
+</li>
+<li><strong>Meeting Management:</strong>
+   <ul>
+   <li>Meeting rooms and scheduling</li>
+   <li>Participant management</li>
+   <li>Meeting notes and action items</li>
+   <li>Follow-up task assignment</li>
+   <li>Meeting analytics and reporting</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="external-communication">External Communication Integration</h3>
+<p><img alt="Screenshot: External Communication" src="#" /></p>
+
+<h4 id="email-integration">Email Integration</h4>
+<ul>
+<li><strong>Email Management:</strong>
+   <ul>
+   <li>Integrated email client</li>
+   <li>Case-specific email threading</li>
+   <li>Automatic email archiving</li>
+   <li>Email template management</li>
+   <li>Bulk email capabilities</li>
+   </ul>
+</li>
+<li><strong>Client Communication:</strong>
+   <ul>
+   <li>Secure client portals</li>
+   <li>Automated status updates</li>
+   <li>Document sharing with clients</li>
+   <li>Appointment scheduling</li>
+   <li>Client feedback collection</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="notification-system">Comprehensive Notification System</h4>
+<p><img alt="Screenshot: Notification Center" src="#" /></p>
+<ul>
+<li><strong>Notification Types:</strong>
+   <ul>
+   <li>Case status changes</li>
+   <li>Document updates and approvals</li>
+   <li>Court date reminders</li>
+   <li>Task assignments and deadlines</li>
+   <li>System maintenance alerts</li>
+   </ul>
+</li>
+<li><strong>Delivery Methods:</strong>
+   <ul>
+   <li>In-app notifications</li>
+   <li>Email notifications</li>
+   <li>SMS text messages</li>
+   <li>Push notifications (mobile)</li>
+   <li>Desktop notifications</li>
+   </ul>
+</li>
+<li><strong>Notification Management:</strong>
+   <ul>
+   <li>Customizable notification preferences</li>
+   <li>Notification scheduling and timing</li>
+   <li>Priority-based notification routing</li>
+   <li>Notification history and tracking</li>
+   <li>Do not disturb settings</li>
+   </ul>
+</li>
+</ul>
+<h2 id="notifications-and-alerts">Advanced Notifications and Alert System</h2>
+<p><img alt="Screenshot: Notifications and Alerts" src="#" /></p>
+
+<h3 id="notification-categories">Comprehensive Notification Categories</h3>
+<p><img alt="Screenshot: Notification Categories" src="#" /></p>
+
+<h4 id="case-related-notifications">Case-Related Notifications</h4>
+<ul>
+<li><strong>Case Management Alerts:</strong>
+   <ul>
+   <li>New case assignments with priority indicators</li>
+   <li>Case status changes and updates</li>
+   <li>Case closure approvals and rejections</li>
+   <li>Settlement offer notifications</li>
+   <li>Appeal filing deadlines</li>
+   </ul>
+</li>
+<li><strong>Court and Legal Alerts:</strong>
+   <ul>
+   <li>Upcoming court hearings (24hr, 1 week advance)</li>
+   <li>Filing deadline reminders</li>
+   <li>Court order notifications</li>
+   <li>Judgment and decision alerts</li>
+   <li>Discovery deadline reminders</li>
+   </ul>
+</li>
+<li><strong>Document Notifications:</strong>
+   <ul>
+   <li>New document uploads</li>
+   <li>Document review requests</li>
+   <li>Document approval/rejection status</li>
+   <li>Version update notifications</li>
+   <li>Document access requests</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="system-administrative-alerts">System and Administrative Alerts</h4>
+<ul>
+<li><strong>User Management:</strong>
+   <ul>
+   <li>New user account creation</li>
+   <li>Password expiration warnings</li>
+   <li>Account lockout notifications</li>
+   <li>Role and permission changes</li>
+   <li>Login attempt alerts</li>
+   </ul>
+</li>
+<li><strong>System Maintenance:</strong>
+   <ul>
+   <li>Scheduled maintenance windows</li>
+   <li>System update notifications</li>
+   <li>Backup completion status</li>
+   <li>Performance monitoring alerts</li>
+   <li>Security incident notifications</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="notification-delivery-management">Notification Delivery and Management</h3>
+<p><img alt="Screenshot: Notification Settings" src="#" /></p>
+
+<h4 id="delivery-channels">Multi-Channel Delivery System</h4>
+<ul>
+<li><strong>In-Application Notifications:</strong>
+   <ul>
+   <li>Real-time notification bell with badge counts</li>
+   <li>Notification center with categorization</li>
+   <li>Pop-up alerts for urgent matters</li>
+   <li>Toast notifications for updates</li>
+   <li>Dashboard notification widgets</li>
+   </ul>
+</li>
+<li><strong>Email Notifications:</strong>
+   <ul>
+   <li>Immediate email alerts for critical events</li>
+   <li>Daily digest summaries</li>
+   <li>Weekly case status reports</li>
+   <li>Custom email templates</li>
+   <li>HTML and plain text formats</li>
+   </ul>
+</li>
+<li><strong>Mobile Notifications:</strong>
+   <ul>
+   <li>Push notifications to mobile devices</li>
+   <li>SMS text message alerts</li>
+   <li>Mobile app badge notifications</li>
+   <li>Location-based court reminders</li>
+   <li>Offline notification queuing</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="notification-customization">Notification Customization and Preferences</h4>
+<p><img alt="Screenshot: Notification Preferences" src="#" /></p>
+<ul>
+<li><strong>Personal Preferences:</strong>
+   <ul>
+   <li>Individual notification settings per user</li>
+   <li>Priority-based notification filtering</li>
+   <li>Time-based notification scheduling</li>
+   <li>Do not disturb periods</li>
+   <li>Vacation and out-of-office settings</li>
+   </ul>
+</li>
+<li><strong>Role-Based Notifications:</strong>
+   <ul>
+   <li>Administrator-specific system alerts</li>
+   <li>Supervisor approval notifications</li>
+   <li>Lawyer case assignment alerts</li>
+   <li>Clerk data entry reminders</li>
+   <li>Client communication notifications</li>
+   </ul>
+</li>
+<li><strong>Advanced Filtering:</strong>
+   <ul>
+   <li>Case type-specific notifications</li>
+   <li>Branch and department filtering</li>
+   <li>Amount threshold-based alerts</li>
+   <li>Date range notification settings</li>
+   <li>Keyword-based notification rules</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="alert-escalation">Alert Escalation and Response Management</h3>
+<p><img alt="Screenshot: Alert Escalation" src="#" /></p>
+
+<h4 id="escalation-procedures">Escalation Procedures</h4>
+<ul>
+<li><strong>Automatic Escalation:</strong>
+   <ul>
+   <li>Time-based escalation rules</li>
+   <li>Unread notification escalation</li>
+   <li>Critical alert escalation chains</li>
+   <li>Supervisor notification backup</li>
+   <li>Emergency contact procedures</li>
+   </ul>
+</li>
+<li><strong>Response Tracking:</strong>
+   <ul>
+   <li>Notification acknowledgment tracking</li>
+   <li>Response time monitoring</li>
+   <li>Action taken documentation</li>
+   <li>Follow-up requirement tracking</li>
+   <li>Resolution confirmation</li>
+   </ul>
+</li>
+</ul>
+<h2 id="reporting-and-analytics">Comprehensive Reporting and Analytics System</h2>
+<p><img alt="Screenshot: Reporting and Analytics" src="#" /></p>
+
+<h3 id="standard-reports">Standard Report Categories</h3>
+<p><img alt="Screenshot: Standard Reports" src="#" /></p>
+
+<h4 id="case-management-reports">Case Management Reports</h4>
+<ul>
+<li><strong>Case Status Reports:</strong>
+   <ul>
+   <li>Active cases by status and priority</li>
+   <li>Case aging analysis and overdue cases</li>
+   <li>Case closure rates and trends</li>
+   <li>Case assignment distribution</li>
+   <li>Case type performance analysis</li>
+   </ul>
+</li>
+<li><strong>Performance Analytics:</strong>
+   <ul>
+   <li>Average case resolution times</li>
+   <li>Success rate by case type and lawyer</li>
+   <li>Recovery amount statistics and trends</li>
+   <li>Settlement vs. litigation outcomes</li>
+   <li>Appeal success rates</li>
+   </ul>
+</li>
+<li><strong>Workload Analysis:</strong>
+   <ul>
+   <li>Lawyer workload distribution</li>
+   <li>Case assignment balance</li>
+   <li>Productivity metrics and KPIs</li>
+   <li>Time allocation analysis</li>
+   <li>Resource utilization reports</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="financial-reports">Financial and Recovery Reports</h4>
+<p><img alt="Screenshot: Financial Reports" src="#" /></p>
+<ul>
+<li><strong>Recovery Analytics:</strong>
+   <ul>
+   <li>Total recovery amounts by period</li>
+   <li>Recovery rate by case type</li>
+   <li>Outstanding debt analysis</li>
+   <li>Settlement amount trends</li>
+   <li>Cost-benefit analysis</li>
+   </ul>
+</li>
+<li><strong>Financial Performance:</strong>
+   <ul>
+   <li>Revenue generation reports</li>
+   <li>Cost per case analysis</li>
+   <li>Profitability by case type</li>
+   <li>Budget vs. actual spending</li>
+   <li>ROI calculations</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="custom-reporting">Custom Report Builder</h3>
+<p><img alt="Screenshot: Custom Report Builder" src="#" /></p>
+
+<h4 id="report-creation-tools">Report Creation Tools</h4>
+<ul>
+<li><strong>Drag-and-Drop Interface:</strong>
+   <ul>
+   <li>Visual report designer</li>
+   <li>Field selection and arrangement</li>
+   <li>Chart and graph creation</li>
+   <li>Template-based report building</li>
+   <li>Real-time preview functionality</li>
+   </ul>
+</li>
+<li><strong>Advanced Filtering:</strong>
+   <ul>
+   <li>Multi-criteria filtering options</li>
+   <li>Date range selections</li>
+   <li>Case type and status filters</li>
+   <li>User and department filters</li>
+   <li>Amount and value-based filters</li>
+   </ul>
+</li>
+<li><strong>Data Visualization:</strong>
+   <ul>
+   <li>Charts: Bar, line, pie, scatter plots</li>
+   <li>Tables with sorting and grouping</li>
+   <li>Dashboards with multiple widgets</li>
+   <li>Heat maps and trend analysis</li>
+   <li>Interactive data exploration</li>
+   </ul>
+</li>
+</ul>
+
+<h3 id="analytics-dashboard">Analytics Dashboard and KPIs</h3>
+<p><img alt="Screenshot: Analytics Dashboard" src="#" /></p>
+
+<h4 id="key-performance-indicators">Key Performance Indicators (KPIs)</h4>
+<ul>
+<li><strong>Operational KPIs:</strong>
+   <ul>
+   <li>Case resolution time averages</li>
+   <li>Case backlog and aging metrics</li>
+   <li>Document processing efficiency</li>
+   <li>Court appearance success rates</li>
+   <li>Client satisfaction scores</li>
+   </ul>
+</li>
+<li><strong>Financial KPIs:</strong>
+   <ul>
+   <li>Recovery rate percentages</li>
+   <li>Cost per case metrics</li>
+   <li>Revenue per lawyer</li>
+   <li>Settlement success rates</li>
+   <li>Collection efficiency ratios</li>
+   </ul>
+</li>
+</ul>
+
+<h4 id="report-scheduling-distribution">Report Scheduling and Distribution</h4>
+<p><img alt="Screenshot: Report Scheduling" src="#" /></p>
+<ul>
+<li><strong>Automated Reporting:</strong>
+   <ul>
+   <li>Scheduled report generation</li>
+   <li>Automatic email distribution</li>
+   <li>Dashboard refresh scheduling</li>
+   <li>Alert-based report triggers</li>
+   <li>Conditional report generation</li>
+   </ul>
+</li>
+<li><strong>Export and Sharing:</strong>
+   <ul>
+   <li>Multiple export formats (PDF, Excel, CSV)</li>
+   <li>Secure report sharing links</li>
+   <li>Print-optimized layouts</li>
+   <li>Mobile-friendly report formats</li>
+   <li>API access for external systems</li>
+   </ul>
+</li>
+</ul>
+- <strong>Reports Include:</strong>
+  - Case summaries and financial reports.
+  - Analytics dashboards showing KPIs.</p>
+<h2 id="audit-logs-and-compliance">Audit Logs and Compliance</h2>
+<p><img alt="Screenshot: Audit Logs and Compliance" src="#" />
+Comprehensive audit logs track all user activities.
+- <strong>Features:</strong> Activity tracking, data integrity checks, compliance reporting.</p>
+<h2 id="system-administration">System Administration</h2>
+<p><img alt="Screenshot: System Administration" src="#" /></p>
+<h3 id="user-and-role-management">User and Role Management</h3>
+<ul>
+<li>Create, modify, and deactivate user accounts.</li>
+<li>Assign roles and permissions.</li>
+</ul>
+<h3 id="system-configuration">System Configuration</h3>
+<ul>
+<li>Manage branches, case types, and workflows.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>LCMS is a robust tool for managing legal operations effectively, providing accountability, compliance, and insights essential for organizational growth.</p>
+<h1 id="legal-case-management-system-lcms-comprehensive-user-guide_1">Legal Case Management System (LCMS) - Comprehensive User Guide</h1>
+<h2 id="table-of-contents_1">Table of Contents</h2>
+<ol>
+<li><a href="#system-overview">System Overview</a></li>
+<li><a href="#user-roles-and-permissions">User Roles and Permissions</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#case-management">Case Management</a></li>
+<li><a href="#detailed-case-types-and-entry-fields">Detailed Case Types and Entry Fields</a></li>
+<li><a href="#workflow-and-approvals">Workflow and Approvals</a></li>
+<li><a href="#document-management">Document Management</a></li>
+<li><a href="#communications-and-chat">Communications and Chat</a></li>
+<li><a href="#notifications-and-alerts">Notifications and Alerts</a></li>
+<li><a href="#reporting-and-analytics">Reporting and Analytics</a></li>
+<li><a href="#audit-logs-and-compliance">Audit Logs and Compliance</a></li>
+<li><a href="#system-administration">System Administration</a></li>
+</ol>
+<h2 id="system-overview_1">System Overview</h2>
+<p>The Legal Case Management System (LCMS) is a comprehensive web-based platform designed to centralize and streamline legal operations within organizations. Built on Laravel framework with Vue.js frontend, LCMS provides:</p>
+<ul>
+<li><strong>Centralized Case Management:</strong> Single repository for all legal cases with complete lifecycle tracking</li>
+<li><strong>Role-Based Access Control:</strong> Secure access based on user roles (Admin, Supervisor, Lawyer)</li>
+<li><strong>Document Management:</strong> Secure storage and version control for legal documents</li>
+<li><strong>Workflow Automation:</strong> Automated approval processes and task assignments</li>
+<li><strong>Real-time Communication:</strong> Built-in chat system for case collaboration</li>
+<li><strong>Comprehensive Reporting:</strong> Analytics and insights for legal operations</li>
+<li><strong>Audit Trail:</strong> Complete activity logging for compliance and accountability</li>
+</ul>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li>Multi-tenant architecture supporting branches and work units</li>
+<li>Six distinct case types with specialized forms and workflows</li>
+<li>Progress tracking with timeline visualization</li>
+<li>Appeal and execution management</li>
+<li>Evidence and document attachment capabilities</li>
+<li>Automated notifications and reminders</li>
+<li>PDF report generation</li>
+<li>Advanced search and filtering capabilities</li>
+</ul>
+<h2 id="user-roles-and-permissions_1">User Roles and Permissions</h2>
+<h3 id="administrator_1">Administrator</h3>
+<p><strong>Full System Access</strong>
+- <strong>User Management:</strong> Create, edit, delete, and manage user accounts
+- <strong>System Configuration:</strong> Manage branches, work units, case types, and system settings
+- <strong>Role Management:</strong> Assign and modify user roles and permissions
+- <strong>Audit Access:</strong> View complete audit logs and system activity
+- <strong>Report Generation:</strong> Access all reports and analytics
+- <strong>System Maintenance:</strong> Database backups, system updates, and maintenance tasks
+- <strong>Case Oversight:</strong> View and manage all cases across all branches</p>
+<h3 id="supervisor_1">Supervisor</h3>
+<p><strong>Case Management and Oversight</strong>
+- <strong>Case Assignment:</strong> Assign cases to lawyers and monitor workload distribution
+- <strong>Approval Authority:</strong> Approve case executions, closures, and settlements
+- <strong>Progress Monitoring:</strong> Track case progress and lawyer performance
+- <strong>Report Access:</strong> Generate reports for supervised cases and lawyers
+- <strong>Budget Oversight:</strong> Monitor claimed amounts and recovery targets
+- <strong>Quality Control:</strong> Review case documentation and ensure compliance
+- <strong>Cannot:</strong> Modify system settings or manage user accounts</p>
+<h3 id="lawyer_1">Lawyer</h3>
+<p><strong>Case Handling and Documentation</strong>
+- <strong>Assigned Cases:</strong> Create, update, and manage assigned cases
+- <strong>Document Management:</strong> Upload, organize, and manage case documents
+- <strong>Progress Updates:</strong> Post regular updates on case developments
+- <strong>Evidence Management:</strong> Add and organize case evidence
+- <strong>Appointment Scheduling:</strong> Schedule and manage court appointments
+- <strong>Communication:</strong> Participate in case-related communications
+- <strong>Cannot:</strong> View other lawyers' private notes or access system administration</p>
+<h2 id="getting-started_1">Getting Started</h2>
+<h3 id="system-access">System Access</h3>
+<ol>
+<li><strong>Login Process:</strong></li>
+<li>Navigate to the LCMS URL provided by your administrator</li>
+<li>Enter your username and password</li>
+<li>Complete two-factor authentication if enabled</li>
+<li>
+<p>Change password on first login (required)</p>
+</li>
+<li>
+<p><strong>Dashboard Overview:</strong></p>
+</li>
+<li><strong>Sidebar Navigation:</strong> Access different modules (Cases, Reports, Chat, etc.)</li>
+<li><strong>Notification Bell:</strong> View pending tasks and alerts</li>
+<li><strong>Search Bar:</strong> Quick case and document search</li>
+<li><strong>User Profile:</strong> Access profile settings and logout</li>
+<li>
+<p><strong>Statistics Cards:</strong> Overview of case counts and performance metrics</p>
+</li>
+<li>
+<p><strong>Interface Navigation:</strong></p>
+</li>
+<li><strong>Main Dashboard:</strong> Central hub with key metrics and recent activities</li>
+<li><strong>Cases Module:</strong> Primary workspace for case management</li>
+<li><strong>Reports Section:</strong> Analytics and reporting tools</li>
+<li><strong>Chat System:</strong> Internal communication platform</li>
+<li><strong>Settings:</strong> Personal preferences and system configuration (admin only)</li>
+</ol>
+<h2 id="case-management">Case Management</h2>
+<h3 id="creating-a-new-case">Creating a New Case</h3>
+<ol>
+<li><strong>Navigate to Cases → Create New Case</strong></li>
+<li><strong>Select Case Type</strong> from the six available options:</li>
+<li>Clean Loan Recovery</li>
+<li>Labor Litigation</li>
+<li>Other Civil Litigation</li>
+<li>Criminal Litigation</li>
+<li>Secured Loan Recovery</li>
+<li>Legal Advisory</li>
+<li><strong>Complete Basic Information:</strong></li>
+<li>File Number (auto-generated or manual)</li>
+<li>Case Title</li>
+<li>Description</li>
+<li>Branch and Work Unit</li>
+<li>Court Name (if applicable)</li>
+<li><strong>Fill Case-Specific Fields</strong> (detailed below)</li>
+<li><strong>Add Parties:</strong></li>
+<li>Plaintiff information (name, contact, address, email)</li>
+<li>Defendant information (name, contact, address, email)</li>
+<li><strong>Save and Assign</strong> to appropriate lawyer</li>
+</ol>
+<h3 id="case-status-management">Case Status Management</h3>
+<p>Cases progress through defined statuses:
+- <strong>Open:</strong> Active cases requiring attention
+- <strong>Closed:</strong> Completed cases with final resolution
+- <strong>Suspended:</strong> Temporarily halted cases</p>
+<h3 id="progress-tracking">Progress Tracking</h3>
+<ul>
+<li><strong>Timeline View:</strong> Visual representation of case milestones</li>
+<li><strong>Progress Updates:</strong> Regular status reports by assigned lawyer</li>
+<li><strong>Appointment Tracking:</strong> Court dates and legal meetings</li>
+<li><strong>Evidence Log:</strong> Chronological evidence collection</li>
+<li><strong>Document History:</strong> Version control for case documents</li>
+</ul>
+<h2 id="detailed-case-types-and-entry-fields">Detailed Case Types and Entry Fields</h2>
+<h3 id="1-clean-loan-recovery-code-01">1. Clean Loan Recovery (Code: 01)</h3>
+<p><strong>Purpose:</strong> Recovery of loans without collateral security</p>
+<p><strong>Core Case Fields:</strong>
+- <strong>File Number:</strong> Auto-generated (CLN-[BRANCH]-[SEQUENCE])
+- <strong>Title:</strong> Case description/title
+- <strong>Description:</strong> Detailed case summary
+- <strong>Branch:</strong> Originating branch
+- <strong>Work Unit:</strong> Responsible work unit
+- <strong>Court Name:</strong> Court handling the case
+- <strong>Status:</strong> Open/Closed/Suspended
+- <strong>Opened At:</strong> Case initiation date
+- <strong>Closed At:</strong> Case closure date (if applicable)
+- <strong>Lawyer ID:</strong> Assigned lawyer
+- <strong>Created By:</strong> Case creator</p>
+<p><strong>Specific Fields:</strong>
+- <strong>Outstanding Amount:</strong> <em>[Required]</em> Remaining loan balance to be recovered
+- <strong>Recovered Amount:</strong> Amount successfully recovered from borrower
+- <strong>Court File Number:</strong> Court's reference number for the case
+- <strong>Claimed Amount:</strong> Total amount claimed in legal proceedings</p>
+<p><strong>Parties Information:</strong>
+- <strong>Plaintiff:</strong> ORGANIZATION/Financial institution details
+- <strong>Defendant:</strong> Borrower information with contact details</p>
+<p><strong>Workflow Features:</strong>
+- Progress tracking with recovery milestones
+- Settlement negotiation records
+- Payment plan management
+- Early closure approval process</p>
+<h3 id="2-labor-litigation-code-02">2. Labor Litigation (Code: 02)</h3>
+<p><strong>Purpose:</strong> Employment and labor law disputes</p>
+<p><strong>Core Case Fields:</strong>
+- <strong>File Number:</strong> Auto-generated (LBR-[BRANCH]-[SEQUENCE])
+- <strong>Title, Description, Branch, Work Unit, Court Name, Status, Dates</strong>
+- <strong>Lawyer Assignment and Creator Information</strong></p>
+<p><strong>Specific Fields:</strong>
+- <strong>Claim Type:</strong> <em>[Required]</em> Dropdown options:
+  - Money: Financial compensation claims
+  - Material: Property or asset claims
+  - Both: Combined monetary and material claims
+- <strong>Claim Amount:</strong> <em>[Conditional]</em> Required if claim type includes 'Money'
+- <strong>Claim Material Description:</strong> <em>[Conditional]</em> Required if claim type includes 'Material'
+- <strong>Recovered Amount:</strong> Total amount/value recovered
+- <strong>Early Settled:</strong> Boolean flag for out-of-court settlements
+- <strong>Execution Opened At:</strong> Date legal execution began
+- <strong>Court File Number:</strong> Court reference
+- <strong>Claimed Amount:</strong> Total claimed value</p>
+<p><strong>Closure Management:</strong>
+- <strong>Closed At:</strong> Case closure date
+- <strong>Closed By:</strong> User who closed the case
+- <strong>Closure Type:</strong> Settlement/Judgment/Dismissal</p>
+<h3 id="3-other-civil-litigation-code-03">3. Other Civil Litigation (Code: 03)</h3>
+<p><strong>Purpose:</strong> General civil disputes not covered by other categories</p>
+<p><strong>Core Case Fields:</strong> Same as Labor Litigation</p>
+<p><strong>Specific Fields:</strong>
+- <strong>Claim Type:</strong> Money/Material/Both (same as Labor Litigation)
+- <strong>Claim Amount:</strong> Financial value of claim
+- <strong>Claim Material Description:</strong> Description of non-monetary claims
+- <strong>Recovered Amount:</strong> Successfully recovered value
+- <strong>Early Settled:</strong> Settlement indicator
+- <strong>Execution Opened At:</strong> Execution commencement date
+- <strong>Court File Number:</strong> Court reference number
+- <strong>Claimed Amount:</strong> Total claim value</p>
+<p><strong>Additional Features:</strong>
+- Contract dispute management
+- Property dispute tracking
+- Damage claim calculations
+- Settlement negotiation history</p>
+<h3 id="4-criminal-litigation-code-04">4. Criminal Litigation (Code: 04)</h3>
+<p><strong>Purpose:</strong> Criminal cases involving the organization</p>
+<p><strong>Core Case Fields:</strong> Standard case information</p>
+<p><strong>Specific Fields:</strong>
+- <strong>Police Ref No:</strong> <em>[Optional]</em> Police investigation reference
+- <strong>Prosecutor Ref No:</strong> <em>[Optional]</em> Prosecution office reference
+- <strong>Evidence Summary:</strong> <em>[Optional]</em> Brief overview of collected evidence
+- <strong>Status:</strong> <em>[Required]</em> Dropdown options:
+  - Submitted: Case filed with authorities
+  - ProsecutorReview: Under prosecution review
+  - Court: Active in court proceedings
+  - Closed: Case concluded
+- <strong>Recovered Amount:</strong> Any financial recovery from criminal proceedings
+- <strong>Court File Number:</strong> Court case reference</p>
+<p><strong>Criminal-Specific Features:</strong>
+- Evidence chain-of-custody tracking
+- Witness management
+- Law enforcement coordination
+- Prosecution liaison</p>
+<h3 id="5-secured-loan-recovery-code-05">5. Secured Loan Recovery (Code: 05)</h3>
+<p><strong>Purpose:</strong> Recovery of loans backed by collateral</p>
+<p><strong>Core Case Fields:</strong> Standard case information</p>
+<p><strong>Financial Fields:</strong>
+- <strong>Loan Amount:</strong> <em>[Required]</em> Original loan principal
+- <strong>Outstanding Amount:</strong> <em>[Required]</em> Current unpaid balance
+- <strong>Claimed Amount:</strong> <em>[Optional]</em> Amount claimed in legal proceedings
+- <strong>Recovered Amount:</strong> Amount successfully recovered
+- <strong>Customer Name:</strong> <em>[Optional]</em> Borrower's full name
+- <strong>Company File Number:</strong> <em>[Optional]</em> Internal company reference</p>
+<p><strong>Collateral Management:</strong>
+- <strong>Collateral Description:</strong> <em>[Optional]</em> Detailed description of security
+- <strong>Collateral Value:</strong> <em>[Optional]</em> Estimated market value
+- <strong>Collateral Estimation Path:</strong> <em>[Optional]</em> Document path for valuation reports</p>
+<p><strong>Foreclosure Process:</strong>
+- <strong>Foreclosure Notice Date:</strong> <em>[Optional]</em> Date of foreclosure notification
+- <strong>Foreclosure Warning:</strong> <em>[Boolean]</em> Warning issued flag
+- <strong>First Auction Held:</strong> <em>[Boolean]</em> First auction completion status
+- <strong>Second Auction Held:</strong> <em>[Boolean]</em> Second auction completion status
+- <strong>Warning Document Path:</strong> <em>[Optional]</em> Path to warning documentation
+- <strong>Auction Publication Path:</strong> <em>[Optional]</em> Path to auction notices</p>
+<p><strong>Closure Management:</strong>
+- <strong>Closure Type:</strong> <em>[Optional]</em> Method of case resolution:
+  - fully_repaid: Complete loan repayment
+  - collateral_sold: Asset liquidation
+  - restructured: Modified payment terms
+  - settlement: Negotiated agreement
+  - collateral_acquired: ORGANIZATION takes possession
+- <strong>Closure Notes:</strong> <em>[Optional]</em> Additional closure information
+- <strong>Closed At:</strong> Case closure date
+- <strong>Closed By:</strong> User who closed the case</p>
+<p><strong>Related Records:</strong>
+- <strong>Auctions:</strong> Linked auction events and results
+- <strong>Progress Updates:</strong> Regular status updates</p>
+<h3 id="6-legal-advisory-code-06">6. Legal Advisory (Code: 06)</h3>
+<p><strong>Purpose:</strong> Internal legal consultation and document review services</p>
+<p><strong>Core Case Fields:</strong> Standard case information</p>
+<p><strong>Advisory Classification:</strong>
+- <strong>Advisory Type:</strong> <em>[Required]</em> Service type:
+  - written_advice: Legal opinion and recommendations
+  - document_review: Contract and document analysis
+- <strong>Subject:</strong> <em>[Required]</em> Advisory topic or issue
+- <strong>Description:</strong> <em>[Optional]</em> Detailed explanation of advisory need
+- <strong>Requesting Department:</strong> <em>[Optional]</em> Department requesting service
+- <strong>Work Unit Advised:</strong> <em>[Optional]</em> Specific unit receiving advice</p>
+<p><strong>Assignment and Scheduling:</strong>
+- <strong>Assigned Lawyer ID:</strong> <em>[Required]</em> Responsible legal counsel
+- <strong>Request Date:</strong> <em>[Required]</em> Date advisory was requested
+- <strong>Submission Date:</strong> <em>[Optional]</em> Date advisory was delivered</p>
+<p><strong>Status Management:</strong>
+- <strong>Status:</strong> <em>[Required]</em> Current stage:
+  - draft: Initial preparation
+  - in_review: Under legal review
+  - approved: Management approved
+  - completed: Advisory delivered
+  - cancelled: Request cancelled</p>
+<p><strong>Document Review Specific:</strong>
+- <strong>Document Path:</strong> <em>[Optional]</em> Original document location
+- <strong>Review Notes:</strong> <em>[Optional]</em> Analysis and recommendations
+- <strong>Reviewed Document Path:</strong> <em>[Optional]</em> Modified document location</p>
+<p><strong>Tracking and Control:</strong>
+- <strong>Is Own Motion:</strong> <em>[Boolean]</em> Self-initiated advisory flag
+- <strong>Reference Number:</strong> <em>[Optional]</em> External reference identifier</p>
+<p><strong>Approval Workflow:</strong>
+- <strong>Approved By:</strong> <em>[Optional]</em> Approving authority
+- <strong>Approved At:</strong> <em>[Optional]</em> Approval timestamp</p>
+<p><strong>Closure Information:</strong>
+- <strong>Closure Notes:</strong> <em>[Optional]</em> Final advisory summary
+- <strong>Closed At:</strong> <em>[Optional]</em> Completion timestamp
+- <strong>Closed By:</strong> <em>[Optional]</em> User completing advisory</p>
+<p><strong>Related Entities:</strong>
+- <strong>Document Versions:</strong> Track document revision history
+- <strong>Advisory Stakeholders:</strong> Internal and external parties involved:
+  - requester: Service requestor
+  - reviewer: Legal reviewer
+  - approver: Final authority
+  - recipient: Advice recipient</p>
+<h2 id="workflow-and-approvals_1">Workflow and Approvals</h2>
+<h3 id="case-assignment-process">Case Assignment Process</h3>
+<ol>
+<li><strong>Supervisor Review:</strong> New cases are reviewed for complexity and resource allocation</li>
+<li><strong>Lawyer Assignment:</strong> Cases assigned based on expertise and workload</li>
+<li><strong>Notification:</strong> Assigned lawyer receives automatic notification</li>
+<li><strong>Acceptance:</strong> Lawyer confirms case acceptance and begins work</li>
+</ol>
+<h3 id="approval-workflows">Approval Workflows</h3>
+<p><strong>Case Execution Approval:</strong>
+- Required for initiating legal proceedings
+- Supervisor reviews case merit and documentation
+- Approval triggers court filing and formal proceedings</p>
+<p><strong>Early Closure Approval:</strong>
+- Required for settlements and early case termination
+- Financial impact assessment
+- Supervisor approval before case closure</p>
+<p><strong>Settlement Approval:</strong>
+- Multi-level approval based on settlement amount
+- Documentation of settlement terms
+- Legal review of settlement agreements</p>
+<h3 id="progress-reporting">Progress Reporting</h3>
+<p><strong>Regular Updates:</strong> Lawyers provide periodic case status reports
+<strong>Milestone Tracking:</strong> Key events and deadlines monitored
+<strong>Exception Reporting:</strong> Automatic alerts for overdue tasks or missed deadlines</p>
+<h2 id="document-management_1">Document Management</h2>
+<h3 id="document-types">Document Types</h3>
+<ul>
+<li><strong>Case Documents:</strong> Pleadings, motions, contracts, correspondence</li>
+<li><strong>Evidence:</strong> Physical and digital evidence files</li>
+<li><strong>Court Documents:</strong> Orders, judgments, hearing transcripts</li>
+<li><strong>Internal Documents:</strong> Memos, analysis, strategy documents</li>
+</ul>
+<h3 id="version-control">Version Control</h3>
+<ul>
+<li><strong>Document Versioning:</strong> Automatic version tracking for all documents</li>
+<li><strong>Revision History:</strong> Complete audit trail of document changes</li>
+<li><strong>Access Control:</strong> Role-based document access permissions</li>
+</ul>
+<h3 id="file-management">File Management</h3>
+<ul>
+<li><strong>Secure Storage:</strong> Encrypted document storage with backup</li>
+<li><strong>File Organization:</strong> Hierarchical folder structure by case and type</li>
+<li><strong>Search Capability:</strong> Full-text search across all documents</li>
+<li><strong>Export Options:</strong> Bulk download and archive capabilities</li>
+</ul>
+<h2 id="communications-and-chat">Communications and Chat</h2>
+<h3 id="built-in-chat-system">Built-in Chat System</h3>
+<ul>
+<li><strong>Real-time Messaging:</strong> Instant communication between team members</li>
+<li><strong>Group Conversations:</strong> Case-specific discussion channels</li>
+<li><strong>File Sharing:</strong> Direct document sharing within conversations</li>
+<li><strong>Message History:</strong> Complete conversation archives</li>
+</ul>
+<h3 id="notification-integration">Notification Integration</h3>
+<ul>
+<li><strong>Chat Notifications:</strong> Instant alerts for new messages</li>
+<li><strong>Case Updates:</strong> Automatic notifications for case changes</li>
+<li><strong>Assignment Alerts:</strong> New case assignment notifications</li>
+<li><strong>Deadline Reminders:</strong> Court date and deadline alerts</li>
+</ul>
+<h2 id="notifications-and-alerts_1">Notifications and Alerts</h2>
+<h3 id="automated-notifications">Automated Notifications</h3>
+<p><strong>Case Assignments:</strong>
+- New case assignment to lawyer
+- Case reassignment notifications
+- Workload distribution alerts</p>
+<p><strong>Approval Requests:</strong>
+- Execution approval requests to supervisors
+- Settlement approval notifications
+- Early closure approval requests</p>
+<p><strong>Deadline Reminders:</strong>
+- Court hearing reminders (configurable timing)
+- Filing deadline alerts
+- Progress update reminders</p>
+<p><strong>System Notifications:</strong>
+- Document upload confirmations
+- Status change notifications
+- System maintenance alerts</p>
+<h3 id="notification-channels">Notification Channels</h3>
+<ul>
+<li><strong>In-App Notifications:</strong> Real-time system notifications</li>
+<li><strong>Email Alerts:</strong> Configurable email notifications</li>
+<li><strong>Dashboard Alerts:</strong> Centralized notification center</li>
+</ul>
+<h2 id="reporting-and-analytics_1">Reporting and Analytics</h2>
+<h3 id="case-reports">Case Reports</h3>
+<p><strong>Case Summary Reports:</strong>
+- Total cases by type and status
+- Case age analysis and trend reporting
+- Recovery rate analysis by case type
+- Lawyer performance metrics</p>
+<p><strong>Financial Reports:</strong>
+- Outstanding amounts by case type
+- Recovery performance analysis
+- Cost analysis and budget tracking
+- Settlement vs. judgment outcomes</p>
+<p><strong>Operational Reports:</strong>
+- Case processing times
+- Court appearance tracking
+- Document filing statistics
+- Workload distribution analysis</p>
+<h3 id="analytics-dashboard">Analytics Dashboard</h3>
+<ul>
+<li><strong>Key Performance Indicators (KPIs):</strong> Visual metrics and trends</li>
+<li><strong>Interactive Charts:</strong> Drill-down capabilities for detailed analysis</li>
+<li><strong>Export Capabilities:</strong> PDF and Excel report generation</li>
+<li><strong>Scheduled Reports:</strong> Automated report delivery</li>
+</ul>
+<h3 id="custom-reporting">Custom Reporting</h3>
+<ul>
+<li><strong>Report Builder:</strong> Create custom reports with drag-and-drop interface</li>
+<li><strong>Filter Options:</strong> Advanced filtering by date, case type, lawyer, status</li>
+<li><strong>Data Export:</strong> Multiple format options (PDF, Excel, CSV)</li>
+</ul>
+<h3 id="data-visualization">Data Visualization</h3>
+<ul>
+<li><strong>Interactive Dashboards:</strong> Customizable dashboards for data visualization</li>
+<li><strong>Chart and Graph Options:</strong> Various chart and graph options for data representation</li>
+</ul>
+<h2 id="audit-logs-and-compliance_1">Audit Logs and Compliance</h2>
+<h3 id="comprehensive-audit-trail">Comprehensive Audit Trail</h3>
+<p><strong>User Activity Tracking:</strong>
+- Login/logout activities with IP addresses
+- Case creation, modification, and deletion events
+- Document upload and access logs
+- Status change history with timestamps</p>
+<p><strong>Data Integrity:</strong>
+- Complete change history for all case data
+- User attribution for all system changes
+- Tamper-evident logging system
+- Backup and recovery audit trails</p>
+<h3 id="compliance-features">Compliance Features</h3>
+<ul>
+<li><strong>Legal Hold Management:</strong> Document preservation for litigation</li>
+<li><strong>Privacy Controls:</strong> Personal data access and modification logs</li>
+<li><strong>Retention Policies:</strong> Automated data retention and archival</li>
+<li><strong>Access Reviews:</strong> Regular review of user permissions and access</li>
+</ul>
+<h3 id="audit-report-generation">Audit Report Generation</h3>
+<ul>
+<li><strong>Activity Reports:</strong> User activity summaries and detailed logs</li>
+<li><strong>Security Reports:</strong> Access attempts and security events</li>
+<li><strong>Compliance Reports:</strong> Regulatory compliance verification</li>
+<li><strong>Data Reports:</strong> Data integrity and backup status reports</li>
+</ul>
+<h2 id="system-administration_1">System Administration</h2>
+<h3 id="user-management">User Management</h3>
+<p><strong>User Account Administration:</strong>
+- Create, modify, and deactivate user accounts
+- Password policy enforcement and reset capabilities
+- Role assignment and permission management
+- Multi-factor authentication configuration</p>
+<p><strong>Role Management:</strong>
+- Define custom roles and permissions
+- Role-based access control implementation
+- Permission inheritance and override capabilities
+- Regular access reviews and updates</p>
+<h3 id="system-configuration_1">System Configuration</h3>
+<p><strong>Branch and Work Unit Management:</strong>
+- Organizational structure configuration
+- Branch-specific settings and preferences
+- Work unit assignment and management
+- Geographic and functional organization</p>
+<p><strong>Case Type Configuration:</strong>
+- Custom case type creation and modification
+- Field configuration and validation rules
+- Workflow customization per case type
+- Form layout and user interface customization</p>
+<h3 id="system-maintenance">System Maintenance</h3>
+<p><strong>Database Management:</strong>
+- Regular database backups and integrity checks
+- Performance monitoring and optimization
+- Data archival and cleanup procedures
+- Disaster recovery planning and testing</p>
+<p><strong>System Monitoring:</strong>
+- Server performance monitoring
+- Application error tracking and resolution
+- Security monitoring and incident response
+- User activity monitoring and anomaly detection</p>
+<h3 id="integration-and-api-management">Integration and API Management</h3>
+<ul>
+<li><strong>External System Integration:</strong> Court systems, document management</li>
+<li><strong>API Security:</strong> Authentication and authorization for external access</li>
+<li><strong>Data Exchange:</strong> Secure data import and export capabilities</li>
+<li><strong>Third-party Services:</strong> Email, SMS, and notification services</li>
+</ul>
+<h2 id="detailed-case-management">Detailed Case Management</h2>
+
+<h3 id="case-status-lifecycle">Case Status Lifecycle Management</h3>
+<p><img alt="Screenshot: Case Status Lifecycle" src="#" /></p>
+<p>The LCMS provides comprehensive case status management throughout the entire legal process:</p>
+
+<h4 id="status-categories">Status Categories</h4>
+<ul>
+<li><strong>Open:</strong> Active cases requiring immediate attention</li>
+<li><strong>In Progress:</strong> Cases currently being worked on</li>
+<li><strong>Under Review:</strong> Cases pending supervisor or legal review</li>
+<li><strong>Awaiting Court:</strong> Cases scheduled for court proceedings</li>
+<li><strong>Settlement Negotiation:</strong> Cases in active settlement discussions</li>
+<li><strong>Appeal Process:</strong> Cases under appeal or preparing for appeal</li>
+<li><strong>Suspended:</strong> Temporarily halted cases</li>
+<li><strong>Closed:</strong> Completed cases with final resolution</li>
+</ul>
+
+<h4 id="updating-case-status">How to Update Case Status</h4>
+<p><img alt="Screenshot: Case Status Update Interface" src="#" /></p>
+<ol>
+<li><strong>Navigate to Case Details:</strong> Open the specific case from your dashboard</li>
+<li><strong>Access Status Panel:</strong> Click on the "Status" tab in the case details view</li>
+<li><strong>Select New Status:</strong> Choose the appropriate status from the dropdown menu</li>
+<li><strong>Add Status Notes:</strong> Provide detailed comments explaining the status change</li>
+<li><strong>Attach Supporting Documents:</strong> Upload any relevant documents supporting the status change</li>
+<li><strong>Set Notifications:</strong> Configure who should be notified of the status change</li>
+<li><strong>Save Changes:</strong> Click "Update Status" to save the changes</li>
+</ol>
+
+<h4 id="status-change-approval">Status Change Approval Workflow</h4>
+<p><img alt="Screenshot: Status Change Approval" src="#" /></p>
+<p>Certain status changes require supervisor approval:</p>
+<ul>
+<li><strong>Closure Requests:</strong> All case closures must be approved by supervisors</li>
+<li><strong>Settlement Agreements:</strong> Settlements above threshold amounts require approval</li>
+<li><strong>Case Suspension:</strong> Temporary suspension requires justification and approval</li>
+<li><strong>Appeal Initiation:</strong> Starting appeal process requires supervisor authorization</li>
+</ul>
+
+<h3 id="appeal-management">Appeal Management System</h3>
+<p><img alt="Screenshot: Appeal Management Dashboard" src="#" /></p>
+
+<h4 id="initiating-appeals">Initiating Appeals</h4>
+<p>The appeal process in LCMS is comprehensive and tracks every step:</p>
+<ol>
+<li><strong>Appeal Assessment:</strong>
+   <ul>
+   <li>Review original case judgment or decision</li>
+   <li>Analyze grounds for appeal (legal errors, procedural issues, new evidence)</li>
+   <li>Calculate appeal deadlines and filing requirements</li>
+   <li>Assess probability of success and cost-benefit analysis</li>
+   </ul>
+</li>
+<li><strong>Appeal Preparation:</strong>
+   <p><img alt="Screenshot: Appeal Preparation Form" src="#" /></p>
+   <ul>
+   <li>Draft notice of appeal</li>
+   <li>Prepare appellate brief and supporting documents</li>
+   <li>Compile case record and transcripts</li>
+   <li>Research applicable appellate law and precedents</li>
+   </ul>
+</li>
+<li><strong>Filing Process:</strong>
+   <ul>
+   <li>Submit appeal documents to appropriate appellate court</li>
+   <li>Pay required filing fees</li>
+   <li>Serve notice to opposing parties</li>
+   <li>Update case status to "Appeal Filed"</li>
+   </ul>
+</li>
+</ol>
+
+<h4 id="appeal-tracking">Appeal Progress Tracking</h4>
+<p><img alt="Screenshot: Appeal Timeline View" src="#" /></p>
+<p>Track appeal progress through dedicated timeline:</p>
+<ul>
+<li><strong>Filing Deadlines:</strong> Automated reminders for critical dates</li>
+<li><strong>Court Scheduling:</strong> Integration with court calendar systems</li>
+<li><strong>Document Submissions:</strong> Track all appellate briefs and responses</li>
+<li><strong>Oral Arguments:</strong> Schedule and prepare for appellate hearings</li>
+<li><strong>Decision Tracking:</strong> Monitor appellate court decisions and outcomes</li>
+</ul>
+
+<h4 id="appeal-outcomes">Appeal Outcomes Management</h4>
+<ul>
+<li><strong>Affirmed:</strong> Original decision upheld - case closed</li>
+<li><strong>Reversed:</strong> Decision overturned - case may return to lower court</li>
+<li><strong>Remanded:</strong> Case sent back for further proceedings</li>
+<li><strong>Modified:</strong> Decision partially changed - update case accordingly</li>
+</ul>
+
+<h2 id="advanced-case-operations">Advanced Case Operations</h2>
+
+<h3 id="case-assignment-management">Case Assignment and Workload Management</h3>
+<p><img alt="Screenshot: Case Assignment Dashboard" src="#" /></p>
+
+<h4 id="automatic-assignment">Automatic Case Assignment</h4>
+<p>LCMS includes intelligent case assignment features:</p>
+<ul>
+<li><strong>Workload Balancing:</strong> Automatically distribute cases based on current lawyer workload</li>
+<li><strong>Expertise Matching:</strong> Assign cases based on lawyer specialization and experience</li>
+<li><strong>Geographic Considerations:</strong> Consider lawyer location and court jurisdiction</li>
+<li><strong>Conflict Checking:</strong> Automatic conflict of interest detection</li>
+</ul>
+
+<h4 id="manual-assignment">Manual Case Assignment Process</h4>
+<p><img alt="Screenshot: Manual Assignment Interface" src="#" /></p>
+<ol>
+<li><strong>Select Case:</strong> Choose unassigned case from the queue</li>
+<li><strong>Review Case Details:</strong> Analyze case type, complexity, and requirements</li>
+<li><strong>Choose Lawyer:</strong> Select appropriate lawyer based on availability and expertise</li>
+<li><strong>Set Priority Level:</strong> Assign urgency level (High, Medium, Low)</li>
+<li><strong>Add Assignment Notes:</strong> Provide specific instructions or considerations</li>
+<li><strong>Notify Parties:</strong> Send automatic notifications to assigned lawyer and stakeholders</li>
+</ol>
+
+<h3 id="document-version-control">Document Version Control and Management</h3>
+<p><img alt="Screenshot: Document Version Control" src="#" /></p>
+
+<h4 id="version-tracking">Document Version Tracking</h4>
+<ul>
+<li><strong>Version History:</strong> Complete audit trail of all document changes</li>
+<li><strong>Change Tracking:</strong> Detailed log of who made changes and when</li>
+<li><strong>Comparison Tools:</strong> Side-by-side comparison of document versions</li>
+<li><strong>Rollback Capability:</strong> Ability to revert to previous document versions</li>
+</ul>
+
+<h4 id="collaborative-editing">Collaborative Document Editing</h4>
+<p><img alt="Screenshot: Collaborative Editing Interface" src="#" /></p>
+<ul>
+<li><strong>Real-time Collaboration:</strong> Multiple users can edit documents simultaneously</li>
+<li><strong>Comment System:</strong> Add comments and suggestions to specific document sections</li>
+<li><strong>Review Workflow:</strong> Structured review and approval process</li>
+<li><strong>Lock Management:</strong> Prevent conflicting edits through document locking</li>
+</ul>
+
+<h3 id="advanced-search-filtering">Advanced Search and Filtering</h3>
+<p><img alt="Screenshot: Advanced Search Interface" src="#" /></p>
+
+<h4 id="search-capabilities">Comprehensive Search Capabilities</h4>
+<ul>
+<li><strong>Full-Text Search:</strong> Search across all case documents and notes</li>
+<li><strong>Metadata Search:</strong> Search by case attributes, dates, and parties</li>
+<li><strong>Boolean Search:</strong> Complex search queries with AND, OR, NOT operators</li>
+<li><strong>Saved Searches:</strong> Save frequently used search queries</li>
+</ul>
+
+<h4 id="filtering-options">Advanced Filtering Options</h4>
+<p><img alt="Screenshot: Filter Panel" src="#" /></p>
+<ul>
+<li><strong>Date Range Filters:</strong> Filter by creation date, last modified, court dates</li>
+<li><strong>Status Filters:</strong> Filter by current case status or status history</li>
+<li><strong>Party Filters:</strong> Search by plaintiff, defendant, or legal representatives</li>
+<li><strong>Amount Filters:</strong> Filter by claim amounts, settlement values, or recovery amounts</li>
+<li><strong>Geographic Filters:</strong> Filter by court jurisdiction, branch, or work unit</li>
+</ul>
+
+<h2 id="system-integration-features">System Integration Features</h2>
+
+<h3 id="court-system-integration">Court System Integration</h3>
+<p><img alt="Screenshot: Court System Integration" src="#" /></p>
+
+<h4 id="electronic-filing">Electronic Court Filing</h4>
+<ul>
+<li><strong>Direct Filing:</strong> Submit documents directly to court systems</li>
+<li><strong>Filing Status Tracking:</strong> Real-time updates on filing acceptance/rejection</li>
+<li><strong>Court Calendar Sync:</strong> Automatic synchronization with court scheduling systems</li>
+<li><strong>Fee Calculation:</strong> Automatic calculation and payment of court fees</li>
+</ul>
+
+<h4 id="court-notifications">Court Notifications and Updates</h4>
+<p><img alt="Screenshot: Court Notifications Panel" src="#" /></p>
+<ul>
+<li><strong>Hearing Schedules:</strong> Automatic import of court hearing schedules</li>
+<li><strong>Order Notifications:</strong> Receive court orders and judgments electronically</li>
+<li><strong>Deadline Reminders:</strong> Automated reminders for filing deadlines</li>
+<li><strong>Status Updates:</strong> Real-time case status updates from court systems</li>
+</ul>
+
+<h3 id="financial-system-integration">Financial System Integration</h3>
+<p><img alt="Screenshot: Financial Integration Dashboard" src="#" /></p>
+
+<h4 id="billing-integration">Billing and Time Tracking Integration</h4>
+<ul>
+<li><strong>Time Tracking:</strong> Integrated time tracking for billable hours</li>
+<li><strong>Expense Management:</strong> Track case-related expenses and costs</li>
+<li><strong>Invoice Generation:</strong> Automatic invoice creation based on time and expenses</li>
+<li><strong>Payment Tracking:</strong> Monitor client payments and outstanding balances</li>
+</ul>
+
+<h4 id="recovery-tracking">Recovery and Settlement Tracking</h4>
+<p><img alt="Screenshot: Recovery Tracking Interface" src="#" /></p>
+<ul>
+<li><strong>Settlement Management:</strong> Track settlement negotiations and agreements</li>
+<li><strong>Recovery Monitoring:</strong> Monitor actual vs. expected recovery amounts</li>
+<li><strong>Payment Schedules:</strong> Manage installment payment plans</li>
+<li><strong>Collection Activities:</strong> Track collection efforts and outcomes</li>
+</ul>
+
+<h2 id="mobile-accessibility">Mobile Accessibility and Remote Access</h2>
+
+<h3 id="mobile-application">Mobile Application Features</h3>
+<p><img alt="Screenshot: Mobile App Interface" src="#" /></p>
+
+<h4 id="mobile-case-access">Mobile Case Access</h4>
+<ul>
+<li><strong>Case Dashboard:</strong> View case summaries and key information</li>
+<li><strong>Document Viewing:</strong> Access and review case documents on mobile devices</li>
+<li><strong>Status Updates:</strong> Update case status and add notes from mobile</li>
+<li><strong>Photo Capture:</strong> Capture and upload photos directly to cases</li>
+</ul>
+
+<h4 id="mobile-notifications">Mobile Notifications</h4>
+<p><img alt="Screenshot: Mobile Notifications" src="#" /></p>
+<ul>
+<li><strong>Push Notifications:</strong> Receive real-time alerts on mobile devices</li>
+<li><strong>Calendar Integration:</strong> Sync court dates with mobile calendar apps</li>
+<li><strong>Offline Access:</strong> Limited offline functionality for critical information</li>
+<li><strong>Secure Authentication:</strong> Biometric authentication for mobile access</li>
+</ul>
+
+<h3 id="remote-work-capabilities">Remote Work Capabilities</h3>
+<p><img alt="Screenshot: Remote Access Dashboard" src="#" /></p>
+
+<h4 id="secure-remote-access">Secure Remote Access</h4>
+<ul>
+<li><strong>VPN Integration:</strong> Secure connection for remote workers</li>
+<li><strong>Multi-Factor Authentication:</strong> Enhanced security for remote access</li>
+<li><strong>Session Management:</strong> Control and monitor remote user sessions</li>
+<li><strong>Data Encryption:</strong> End-to-end encryption for remote communications</li>
+</ul>
+
+<h2 id="training-and-support">Training and Support System</h2>
+
+<h3 id="user-training">User Training and Onboarding</h3>
+<p><img alt="Screenshot: Training Module Interface" src="#" /></p>
+
+<h4 id="training-modules">Interactive Training Modules</h4>
+<ul>
+<li><strong>Role-Based Training:</strong> Customized training based on user role</li>
+<li><strong>Interactive Tutorials:</strong> Step-by-step guided tutorials</li>
+<li><strong>Video Training:</strong> Comprehensive video training library</li>
+<li><strong>Progress Tracking:</strong> Monitor training completion and competency</li>
+</ul>
+
+<h4 id="help-system">Integrated Help System</h4>
+<p><img alt="Screenshot: Help System Interface" src="#" /></p>
+<ul>
+<li><strong>Contextual Help:</strong> Context-sensitive help throughout the system</li>
+<li><strong>Search Help:</strong> Searchable knowledge base and FAQ</li>
+<li><strong>Video Guides:</strong> Quick video guides for common tasks</li>
+<li><strong>Live Chat Support:</strong> Real-time support chat functionality</li>
+</ul>
+
+<h3 id="system-maintenance">System Maintenance and Updates</h3>
+<p><img alt="Screenshot: System Maintenance Dashboard" src="#" /></p>
+
+<h4 id="automated-maintenance">Automated Maintenance Features</h4>
+<ul>
+<li><strong>Automatic Backups:</strong> Scheduled database and file backups</li>
+<li><strong>System Health Monitoring:</strong> Continuous monitoring of system performance</li>
+<li><strong>Update Management:</strong> Automated system updates and patches</li>
+<li><strong>Performance Optimization:</strong> Automatic database optimization and cleanup</li>
+</ul>
+
+<h4 id="maintenance-scheduling">Maintenance Scheduling</h4>
+<p><img alt="Screenshot: Maintenance Schedule" src="#" /></p>
+<ul>
+<li><strong>Scheduled Downtime:</strong> Plan and communicate system maintenance windows</li>
+<li><strong>Update Notifications:</strong> Advance notice of system updates and changes</li>
+<li><strong>Rollback Procedures:</strong> Ability to rollback updates if issues occur</li>
+<li><strong>Performance Reports:</strong> Regular system performance and health reports</li>
+</ul>
+
+<h2 id="conclusion_1">Conclusion</h2>
+<p>The Legal Case Management System (LCMS) provides a comprehensive, secure, and efficient platform for managing all aspects of legal operations. From case initiation through final resolution, LCMS ensures:</p>
+<ul>
+<li><strong>Complete Case Lifecycle Management:</strong> Every case type supported with specialized workflows</li>
+<li><strong>Enhanced Collaboration:</strong> Real-time communication and document sharing</li>
+<li><strong>Regulatory Compliance:</strong> Complete audit trails and compliance reporting</li>
+<li><strong>Operational Efficiency:</strong> Automated workflows and intelligent notifications</li>
+<li><strong>Data-Driven Insights:</strong> Comprehensive reporting and analytics capabilities</li>
+<li><strong>Scalable Architecture:</strong> Supports organizational growth and changing requirements</li>
+</ul>
+<p>Whether managing complex litigation, loan recovery, or providing legal advisory services, LCMS empowers legal teams to work more effectively while maintaining the highest standards of accountability and compliance.</p>
+<p>For technical support or additional training, contact your system administrator or refer to the technical documentation provided with your LCMS installation.</p>
+</body>
+</html>
+
+
+

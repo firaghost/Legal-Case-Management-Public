@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LCMS – Comprehensive User Guide</title>
+<style>
+    :root{--brand:#004b8d;--light:#f5f7fa;--border:#d0d7de;--text:#24292f;font-size:16px}
+    body{margin:0;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:#fff;line-height:1.6}
+    header{background:var(--brand);color:#fff;padding:60px 40px;text-align:center}
+    header h1{margin:0;font-size:2.2rem;font-weight:600}
+    nav{background:var(--light);border-bottom:1px solid var(--border);padding:25px 40px}
+    nav h2{margin:0 0 10px;color:var(--brand);font-size:1.25rem}
+    nav ul{list-style:none;padding-left:20px;margin:0}
+    nav li{margin:4px 0}
+    nav a{color:var(--brand);text-decoration:none}
+    nav a:hover{text-decoration:underline}
+    main{padding:35px 60px;max-width:1000px;margin:auto}
+    h2{margin-top:60px;font-size:1.75rem;color:var(--brand);border-bottom:3px solid var(--brand);padding-bottom:6px}
+    h3{margin-top:28px;font-size:1.25rem;color:var(--brand)}
+    h4{margin-top:18px;font-size:1rem;font-weight:600}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem}
+    th,td{border:1px solid var(--border);padding:8px;text-align:left}
+    th{background:#eef1f5;font-weight:600}
+    figure{margin:20px 0;text-align:center}
+    figcaption{font-size:.85rem;color:#6b7280}
+    .glossary{background:#fef9e7;border-left:4px solid #f7dc6f;padding:12px;margin:18px 0}
+</style>
+</head>
+<body>
+<header>
+    <h1>Legal Case Management System (LCMS)</h1>
+    <p>Professional User Guide – Version 1.0</p>
+</header>
+
+<nav>
+    <h2>Contents</h2>
+    <ul>
+        <li><a href="#overview">1  System Overview</a></li>
+        <li><a href="#roles">2  Access &amp; User Roles</a></li>
+        <li><a href="#login">3  Getting Started</a></li>
+        <li><a href="#cases">4  Managing Cases</a></li>
+        <li><a href="#forms">5  Case Entry Forms</a></li>
+        <li><a href="#assignment">6  Task Assignment &amp; Workload</a></li>
+        <li><a href="#workflow">7  Approval &amp; Workflow</a></li>
+        <li><a href="#notifications">8  Notifications</a></li>
+        <li><a href="#audit">9  Audit Logs</a></li>
+        <li><a href="#reports">10  Search &amp; Reports</a></li>
+        <li><a href="#settings">11  System Settings</a></li>
+    </ul>
+</nav>
+
+<main>
+<section id="overview">
+<h2>1. System Overview</h2>
+<p>This section provides a high-level description of what the LCMS accomplishes and why it is essential for your organisation’s legal operations.</p>
+<div class="glossary"><strong>Key Terms:</strong> LCMS – Legal Case Management System; KPI – Key Performance Indicator.</div>
+<figure><img src="screenshots/overview.png" alt="LCMS dashboard" width="650"><figcaption>Figure 1 – LCMS Dashboard Overview</figcaption></figure>
+<p>The LCMS centralises case records, timelines, documents, and approvals ensuring transparency and accountability throughout the legal lifecycle.</p>
+</section>
+
+<section id="roles">
+<h2>2. Access &amp; User Roles</h2>
+<p>Understand what each role can see and do within LCMS so that responsibilities are clearly divided.</p>
+<div class="glossary"><strong>Key Terms:</strong> RBAC – Role-Based Access Control; CRUD – Create, Read, Update, Delete.</div>
+<figure><img src="screenshots/roles.png" alt="User roles list" width="650"><figcaption>Figure 2 – User Role Matrix</figcaption></figure>
+<table>
+<thead><tr><th>Role</th><th>Main Actions</th><th>Restrictions</th></tr></thead>
+<tbody>
+<tr><td>Admin</td><td>Manage users, settings, backups</td><td>None</td></tr>
+<tr><td>Supervisor</td><td>Approve execution, monitor workload</td><td>No system settings</td></tr>
+<tr><td>Lawyer</td><td>Create &amp; update assigned cases</td><td>Cannot view other lawyers’ notes</td></tr>
+<tr><td>Clerk</td><td>Log filings &amp; fees</td><td>No approvals</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="login">
+<h2>3. Getting Started</h2>
+<p>This part guides first-time and returning users through access and navigation basics.</p>
+<figure><img src="screenshots/login.png" alt="Login page" width="500"><figcaption>Figure 3 – Login Screen</figcaption></figure>
+<h3>3.1 Logging In</h3>
+<ol>
+<li>Browse to the LCMS URL.</li>
+<li>Enter your credentials and click <em>Login</em>.</li>
+<li>Change password on first login.</li>
+</ol>
+<h3>3.2 Navigating the Interface</h3>
+<ul><li>Sidebar – module links</li><li>Bell icon – notifications</li><li>Search bar – quick lookup</li></ul>
+</section>
+
+<section id="cases">
+<h2>4. Managing Cases</h2>
+<p>Learn how to create, edit, and maintain case files over their lifecycle.</p>
+<div class="glossary"><strong>Key Fields:</strong> Status – current stage; File # – internal reference.</div>
+<figure><img src="screenshots/case_overview.png" alt="Case overview" width="650"><figcaption>Figure 4 – Case Overview Page</figcaption></figure>
+<h3>4.1 Creating a Case</h3>
+<ol><li>Click <em>Cases ▸ New</em>.</li><li>Select type.</li><li>Fill mandatory fields.</li><li>Click <em>Save</em>.</li></ol>
+<h3>4.2 Updating a Case</h3>
+<ul><li>Add documents via drag-and-drop.</li><li>Post progress updates.</li></ul>
+</section>
+
+<section id="forms">
+<h2>5. Case Entry Forms</h2>
+<p>This section details every form and its fields for each case type.</p>
+<figure><img src="screenshots/forms.png" alt="Entry form" width="650"><figcaption>Figure 5 – Dynamic Entry Form</figcaption></figure>
+<!-- Sample form table kept brief for guide size -->
+<h3>Clean Loan Recovery Fields</h3>
+<table><thead><tr><th>Field</th><th>Description</th><th>Required</th></tr></thead><tbody><tr><td>Branch</td><td>Origin branch</td><td>Yes</td></tr><tr><td>Outstanding Amount</td><td>Remaining balance</td><td>Yes</td></tr></tbody></table>
+</section>
+
+<section id="assignment">
+<h2>6. Task Assignment &amp; Workload</h2>
+<p>Assign work and monitor lawyer capacity.</p>
+<figure><img src="screenshots/assignment.png" alt="Assign lawyer" width="650"><figcaption>Figure 6 – Assigning a Lawyer</figcaption></figure>
+<ol><li>Edit case and choose assignee.</li><li>Save to notify lawyer.</li></ol>
+</section>
+
+<section id="workflow">
+<h2>7. Approval &amp; Workflow</h2>
+<p>Explains supervisor approvals and early closure.</p>
+<figure><img src="screenshots/approval.png" alt="Supervisor approvals" width="650"><figcaption>Figure 7 – Supervisor Approval Queue</figcaption></figure>
+<ol><li>Supervisor opens pending list.</li><li>Reviews and approves.</li></ol>
+</section>
+
+<section id="notifications">
+<h2>8. Notifications</h2>
+<p>Keep track of tasks with email and in-app alerts.</p>
+<figure><img src="screenshots/notifications.png" alt="Notifications" width="500"><figcaption>Figure 8 – Notification Centre</figcaption></figure>
+<ul><li>New assignment</li><li>Hearing reminder</li></ul>
+</section>
+
+<section id="audit">
+<h2>9. Audit Logs</h2>
+<p>Track every create, update, or delete action.</p>
+<figure><img src="screenshots/audit.png" alt="Audit logs" width="650"><figcaption>Figure 9 – Audit Log Listing</figcaption></figure>
+</section>
+
+<section id="reports">
+<h2>10. Search &amp; Reports</h2>
+<p>Generate insights and export data.</p>
+<figure><img src="screenshots/reports.png" alt="Reports" width="650"><figcaption>Figure 10 – Reports Dashboard</figcaption></figure>
+</section>
+
+<section id="settings">
+<h2>11. System Settings</h2>
+<p>Administration of reference data, users, and backups.</p>
+<figure><img src="screenshots/settings.png" alt="Settings" width="650"><figcaption>Figure 11 – Settings Panel</figcaption></figure>
+</section>
+</main>
+</body>
+</html>
+
+
+
+

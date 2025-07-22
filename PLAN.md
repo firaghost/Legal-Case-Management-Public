@@ -1,0 +1,154 @@
+# Laravel ViteException Fix Plan
+
+## Notes
+- Admin User Management list & create views implemented; routes and store method working.
+- Lawyer My Cases table view implemented with filters and action buttons.
+- Lawyer New Case Entry dynamic form implemented.
+- Supervisor dashboard enhanced with appeals card, recent lawyer updates list, and approval queue alert.
+- Supervisor All Cases master table with filters implemented.
+- Supervisor Case Approvals page with approval modal implemented; progress updates count displayed in listings.
+- Supervisor Closed Cases table with performance chart implemented.
+- Admin requested expanded Admin views (dashboard summary, user management enhancements, full case registry, reports, settings, audit logs).
+- Admin dashboard summary cards & new cases graph in place.
+- Admin User Management controller updated with role filter, edit, update & destroy methods; views pending.
+- Admin User index now counts assigned cases and role filter applied; create view added.
+- Main layout refactored to Blade with reactive collapsible sidebar and new header using Lucide icons.
+- Reusable UI components `StatCard` and `CaseTable` created with Tailwind & Lucide.
+- Dashboards updated to use new `StatCard` component across Admin, Supervisor, and Lawyer views.
+- CaseDetailController created to serve detailed case view endpoint.
+- Requirement received to build Case Detail page with summary, progress timeline, add-progress modal, and supervisor approval workflow.
+- ProgressUpdate model, migration, controller & routes scaffolded; ProgressTimeline component created; supervisor closure approval logic added.
+- Case Detail Blade page with summary, timeline, add-progress modal, and supervisor approval modal implemented.
+- Role-based dashboard redirect & sidebar logic updated to support Spatie roles and "system administrator".
+- Migration added to create `role` column on users table to resolve SQL missing column error.
+- Database error surfaced: `approved_at` (and related financial fields) columns missing on `case_files`; schema must be updated to match code.
+- Missing columns migration created and database migrated successfully.
+- Admin dashboard graph query rewritten to satisfy ONLY_FULL_GROUP_BY mode.
+- Another missing column error (`execution_opened_at`) detected; `case_files` schema still incomplete.
+- Migration for `execution_opened_at` column created; needs to be migrated.
+- New error: `description` column missing on `progress_updates`; schema and code out of sync.
+- Replaced all `description` references in progress updates with existing `notes` column; no migration required.
+- Fixed `user_id` missing column error by updating `ProgressUpdate` relationship to use `updated_by` and adjusting dashboard queries.
+- Created `resources/views/supervisor/cases/reports.blade.php` (basic stats, chart, table) to resolve missing view error.
+- New error: `advisory_requested_at` column missing on `case_files`; migration created but pending.
+- Created `resources/views/supervisor/cases/advisory.blade.php` (listing advisory requests) to resolve missing view error.
+- Created `resources/views/admin/cases/index.blade.php` (All Cases registry view) to resolve missing view error.
+- Admin `CaseController` created with index & show methods supplying `$branches`; undefined variable error fixed.
+- Admin Cases index page renders; further features pending.
+- Admin cases routes registered in `routes/web.php`; page accessible under Admin → All Cases.
+- Branch model and migration scaffolded via `php artisan make:model Branch -m`; schema defined with essential fields (name, code, contact info); ready for migration.
+- Branch model created; seeding with initial data pending.
+- Branch migration schema updated (name, code, address, contacts, soft deletes).
+- Branch model enhanced with fillable fields and soft deletes; admin view fallback added; debug logging in Admin CaseController.
+- BranchSeeder created, registered, and executed successfully; `$branches` variable now available in view.
+- Admin CaseController updated and `$cases` variable now defined; error resolved by adding eager loading to controller method.
+- Added null-safe checks for cases/branches in admin cases index view.
+- Branch migration schema updated (name, code, address, contacts, soft deletes).
+- Added note: Admin Cases index page now correctly displays case data.
+- FatalError: Duplicate `branch()` method detected in `CaseFile` model; must remove duplicate to resolve redeclare error.
+- Duplicate `branch()` method removed from `CaseFile` model; redeclare error resolved.
+- Sidebar link updated to `admin.cases.index`; RouteNotFoundException resolved.
+
+## Task List
+- [x] Locate existing CSS file(s) in project.
+- [x] Edit `vite.config.js` to add `resources/css/app.css` to inputs.
+- [x] Run `npm install` (ensure deps present).
+- [x] Execute `npm run build` (or `npm run dev`) to regenerate manifest.
+- [x] Clear Laravel caches with `php artisan optimize:clear`.
+- [x] Reload page and confirm the ViteException is gone.
+- [x] Report results / commit changes.
+- [x] Run `php artisan route:list` to verify `/dashboard` route exists.
+- [x] Inspect `routes/web.php` and controllers to ensure dashboard route defined.
+- [x] Re-run `npm run build` to include new base path.
+- [x] Remove `auth` middleware from `/dashboard` route.
+- [x] Update `ProtectedRoute.jsx` with token fallback logic.
+- [x] Create `Api/AuthController.php` for token-based login.
+- [x] Register POST `/api/login` route in `routes/api.php`.
+- [x] Create `welcome.blade.php` view to satisfy Breeze installer.
+- [x] Run `php artisan breeze:install blade` (Blade scaffolding installed).
+- [x] Compile Breeze assets (`npm install && npm run build`).
+- **SPA-specific tasks removed (Blade auth working, React being purged).**
+- [x] Remove React/Vite plugin from config & packages.
+- [x] Delete unused React source directories.
+- [x] Install Blade scaffolding (Laravel Breeze/UI) as baseline.
+- [x] Run `npm install` to prune node_modules.
+- [x] `composer remove inertiajs/inertia-laravel` and clear caches.
+- [x] Build detailed Lawyer dashboard view (stats & timeline).
+- [x] Add Lawyer CaseController and routes (cases list & create, progress, advisory).
+- [x] Scaffold placeholder view `resources/views/lawyer/cases/index.blade.php`.
+- [x] Create shared sidebar (Blade component) and dashboard card component.
+- [x] Integrate sidebar into main layout.
+- [x] Refactor `layouts/app.blade.php` with reactive sidebar & header components.
+- [x] Enhance sidebar with Lucide icons and mobile collapse behaviour.
+- [x] Ensure controllers supply dashboard data to Admin & Supervisor dashboards.
+- [x] Update controllers/routes to return Blade views.
+- [x] Build detailed Admin dashboard view.
+- [x] Build detailed Supervisor dashboard view.
+- [x] Fix layout flex structure so dashboards display correctly.
+- [x] Build detailed Lawyer dashboard cards & timeline.
+- [x] Build Lawyer My Cases table with filters.
+- [x] Build Lawyer New Case Entry dynamic form.
+- [x] Create reusable `StatCard` component for dashboard summaries.
+- [x] Create reusable `CaseTable` component with filters, search & pagination.
+- [x] Replace dashboard cards with new `x-ui.stat-card` components.
+- [ ] Integrate `x-ui.case-table` into case listing pages (lawyer, supervisor, admin).
+- [ ] Test authentication and dashboard navigation.
+- [ ] Clean up unused SPA code & dependencies.
+- [ ] Remove `App\Http\Middleware\HandleInertiaRequests.php` (optional; class already neutralized).
+- [ ] Search & delete any remaining `Inertia\` references.
+- [ ] Clear caches (`php artisan optimize:clear`) and retest dashboards.
+- [x] Extend supervisor sidebar (All Cases, Case Approvals, Closed Cases, Reports, Advisory Reviews).
+- [x] Add stats: Cases Pending Closure, Execution Files Opened, Supervisor Actions.
+- [x] Implement modal & routes for early-closure approval workflow.
+- [x] Extend admin sidebar (Dashboard, User Management, All Cases, Reports, System Settings, Audit Logs).
+- [x] Add total system stats & role count cards to admin dashboard.
+- [x] Implement admin users index listing.
+- [x] Add create user view & store method.
+- [ ] Complete update/delete user functionality.
+- [ ] Audit logs view & model.
+- [x] Admin dashboard summary cards & new cases graph.
+- [ ] Enhance Admin User Management (edit, deactivate, role filter, modal add user & branch assignment).
+- [ ] Build Admin All Cases registry with edit/delete and export.
+- [x] Create Admin Cases index Blade view.
+- [x] Update Admin CaseController index method to supply `$branches` list and fix undefined variable.
+- [x] Register admin cases routes (index, show) in `routes/web.php`.
+- [x] Debug undefined `$cases` variable on admin cases index
+- [x] Remove duplicate `branch()` method in `CaseFile` model and retest
+- [x] Fix missing `admin.cases` named route or update view links
+- [x] Build Supervisor All Cases master table with filters.
+- [x] Build Supervisor Case Approvals page with approval modal.
+- [x] Build Supervisor Closed Cases table & performance chart.
+- [x] Build Supervisor Reports page (type & frequency filters, export).
+- [x] Build Supervisor Advisory Reviews table with approval modal.
+- [x] Build Supervisor Advisory Requests table.
+- [x] Create route `/cases/{case}` mapped to `CaseDetailController`.
+- [x] Generate `CaseDetailController` to load case data.
+- [x] Build Case Detail page (`cases/show.blade.php`) with summary, progress timeline, add progress modal, supervisor panel.
+- [x] Create `ProgressTimeline` Blade component with vertical layout.
+- [x] Create `ProgressUpdate` model, migration, and store logic.
+- [x] Implement Add Progress modal (status, notes, file upload) & save under current user.
+- [x] Add authorization checks for assigned lawyer and supervisor actions.
+- [x] Implement Supervisor "Approve Case Closure" modal & route.
+- [x] Add role-based dashboard redirect & sidebar components wired.
+- [x] Create migration to add `role` column to users table.
+- [x] Add migration to append `approved_at`, `closure_requested_at`, `claimed_amount`, `recovered_amount` columns to `case_files` table.
+- [x] Run `php artisan migrate` and verify dashboards & counts.
+- [x] Create migration to append `execution_opened_at` column to `case_files` table.
+- [x] Refactor progress updates to use existing `notes` column (no new DB column).
+- [x] Update `ProgressUpdate` model to reference `updated_by` FK and adjust queries.
+- [x] Scaffold Supervisor Reports view to resolve missing view error.
+- [x] Create migration to add `advisory_requested_at` column to `case_files` table.
+- [ ] Run migrations for `execution_opened_at` and `advisory_requested_at` and verify counts.
+- [ ] Update models/controllers to cast & use new datetime/money fields.
+- [x] Create Branch model and migration.
+- [x] Run migration for branches table schema.
+- [x] Create BranchSeeder and register in DatabaseSeeder.
+- [x] Seed Branch model with initial data.
+
+## Current Goal
+Integrate `x-ui.case-table` component into listings
+
+
+
+
+

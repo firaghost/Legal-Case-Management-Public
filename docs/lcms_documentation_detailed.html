@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LCMS – Comprehensive Functional & Technical Specification</title>
+<style>
+    body{font-family:Segoe UI,Arial,Helvetica,sans-serif;margin:0;color:#222;line-height:1.6;background:#fff}
+    header{background:#004b8d;color:#fff;padding:50px 30px}
+    h1,h2,h3,h4,h5{margin:20px 0 10px;font-weight:600;line-height:1.3}
+    h1{font-size:34px}
+    h2{font-size:26px;border-bottom:3px solid #004b8d;padding-bottom:4px}
+    h3{font-size:22px;color:#004b8d}
+    h4{font-size:18px}
+    nav{background:#f8f9fa;border-bottom:1px solid #ddd;padding:25px 30px}
+    nav ul{margin:0;padding-left:20px}
+    nav li{margin:4px 0}
+    section{padding:30px 50px}
+    table{border-collapse:collapse;width:100%;margin:15px 0}
+    th,td{border:1px solid #c8c8c8;padding:8px;text-align:left;font-size:14px}
+    th{background:#f1f1f1;font-weight:bold}
+    code{background:#f4f4f4;padding:2px 5px;font-size:90%}
+    .note{background:#fffbe5;border-left:4px solid #ffeb3b;padding:8px 12px;margin:12px 0}
+    .page-break{page-break-after:always}
+</style>
+</head>
+<body>
+<header>
+    <h1>Legal Case Management System (LCMS)</h1>
+    <p>Full Project Analysis &amp; Customer-Facing Documentation</p>
+</header>
+
+<nav>
+    <h2>Contents</h2>
+    <ul>
+        <li><a href="#intro">1. Introduction &amp; Purpose</a></li>
+        <li><a href="#architecture">2. Architectural Overview</a></li>
+        <li><a href="#roles">3. User Roles &amp; Access Matrix</a></li>
+        <li><a href="#modules">4. Core Modules (one-by-one)</a>
+            <ul>
+                <li><a href="#module-cases">4.1 Case Management</a></li>
+                <li><a href="#module-appeals">4.2 Appeals &amp; Cassation</a></li>
+                <li><a href="#module-supervision">4.3 Supervisor Approval</a></li>
+                <li><a href="#module-audit">4.4 Audit Log</a></li>
+                <li><a href="#module-notify">4.5 Notification Engine</a></li>
+                <li><a href="#module-reports">4.6 Reporting &amp; Analytics</a></li>
+                <li><a href="#module-settings">4.7 Administration &amp; Settings</a></li>
+            </ul>
+        </li>
+        <li><a href="#case-types">5. Case Type Specifications</a></li>
+        <li><a href="#db">6. Database Schema Overview</a></li>
+        <li><a href="#security">7. Security &amp; Compliance</a></li>
+        <li><a href="#appendix">8. Appendix: Endpoints &amp; Screens</a></li>
+    </ul>
+</nav>
+
+<!-- INTRO -->
+<section id="intro">
+    <h2>1. Introduction &amp; Purpose</h2>
+    <p>This document provides an exhaustive description of the Legal Case Management System (LCMS). It is tailored for organisational stakeholders, external auditors, and future developers. Every functional module, workflow, screen and database artifact is documented in detail to facilitate understanding, onboarding, regulatory review, and change impact analysis.</p>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="page-break">
+    <h2>2. Architectural Overview</h2>
+    <h3>2.1 Technology Stack</h3>
+    <table>
+        <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+        <tr><td>Frontend</td><td>Laravel Blade, TailwindCSS, Alpine.js</td><td>Component-based UI with reactive widgets</td></tr>
+        <tr><td>Backend</td><td>Laravel Framework v12 (PHP&nbsp;8.2)</td><td>RESTful controllers, Eloquent ORM, jobs, notifications</td></tr>
+        <tr><td>Database</td><td>MySQL 8</td><td>Transactional data store</td></tr>
+        <tr><td>Auth</td><td>Laravel Breeze + Sanctum</td><td>Password &amp; token-based authentication</td></tr>
+        <tr><td>Files</td><td>Laravel Storage (Local / S3)</td><td>Evidence &amp; document uploads</td></tr>
+        <tr><td>Notifications</td><td>Laravel Notification Channels</td><td>Email (SMTP) + in-app</td></tr>
+    </table>
+
+    <h3>2.2 High-Level Component Diagram</h3>
+    <p><em>(For MS Word export, insert architecture image here.)</em></p>
+</section>
+
+<!-- ROLES -->
+<section id="roles">
+    <h2>3. User Roles &amp; Access Matrix</h2>
+    <p>The LCMS uses role-based access control (RBAC). Each permission can be fine-tuned in the <code>permissions</code> table via the Admin UI.</p>
+    <table>
+        <thead>
+        <tr><th rowspan="2">Module / Activity</th><th colspan="4">Role Permission</th></tr>
+        <tr><th>Lawyer</th><th>Supervisor</th><th>Admin</th><th>SysAdmin</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Create Case</td><td>✓ Own</td><td>✓ All</td><td>✓ All</td><td>—</td></tr>
+            <tr><td>Edit Case</td><td>✓ Own</td><td>✓ All</td><td>✓ All</td><td>—</td></tr>
+            <tr><td>Approve Execution</td><td>—</td><td>✓</td><td>✓</td><td>—</td></tr>
+            <tr><td>Manage Users</td><td>—</td><td>—</td><td>✓</td><td>✓</td></tr>
+            <tr><td>System Backup</td><td>—</td><td>—</td><td>✓</td><td>✓</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- MODULES -->
+<section id="modules" class="page-break">
+    <h2>4. Core Modules</h2>
+    <h3 id="module-cases">4.1 Case Management</h3>
+    <p>Central module where lawyers record the complete lifecycle of each litigation matter.</p>
+    <ol>
+        <li><strong>Case Entry Form</strong> – Dynamically loads fields as per selected case type. Mandatory validation enforced server-side and via HTML5.</li>
+        <li><strong>Case Detail View</strong> – Accordion layout showing Overview, Appeal stages, Parties, Progress Updates, Appointments and Type-Specific panels.</li>
+        <li><strong>Progress Updates</strong> – Inline form allows attachment upload (max 8MB, configurable). Saved to <code>progress_updates</code> table.</li>
+    </ol>
+
+    <h3 id="module-appeals">4.2 Appeals &amp; Cassation</h3>
+    <p>Implements strict ordered flow: Direct Suit → Appeal → Second Appeal → Cassation. Duplicate safeguards include Eloquent validation and DB unique index (<code>case_file_id, level</code>).</p>
+    <ul>
+        <li>Form Path: <code>GET /lawyer/cases/{id}/appeals/create</code></li>
+        <li>Controller: <code>AppealController@store</code> (handles flow enforcement)</li>
+        <li>Status timeline auto-logs per stage.</li>
+    </ul>
+
+    <h3 id="module-supervision">4.3 Supervisor Approval</h3>
+    <p>The Supervisor Dashboard lists cases in <code>Pending Execution</code>. Approval acts as a final gate, ensuring compliance with corporate policy before enforcement.</p>
+
+    <h3 id="module-audit">4.4 Audit Log</h3>
+    <p>Trait <code>Auditable</code> hooks into <code>creating</code>, <code>updating</code>, <code>deleting</code>. Audit entries retain <em>before</em> &amp; <em>after</em> JSON snapshots for legal defensibility. Logs older than 5 years can be archived.</p>
+
+    <h3 id="module-notify">4.5 Notification Engine</h3>
+    <p>Notifications stored in <code>notifications</code> table and dispatched via Laravel queues. Templates:</p>
+    <ul><li>New Case Assignment</li><li>Upcoming Hearing Reminder</li><li>Supervisor Decision Notice</li></ul>
+
+    <h3 id="module-reports">4.6 Reporting &amp; Analytics</h3>
+    <p>KPI dashboards powered by Blade + Chart.js. Export endpoints deliver CSV/XLSX.</p>
+
+    <h3 id="module-settings">4.7 Administration &amp; Settings</h3>
+    <p>Admin menu items: Branches, Work Units, Court Codes, Backup, Roles, Permissions. Changes utilise optimistic locking to avoid config races.</p>
+
+    <h2>4. Core Modules – Exhaustive Breakdown</h2>
+
+    <!-- 4.1 CASE MANAGEMENT MODULE -->
+    <article id="module-cases">
+        <h3>4.1 Case Management</h3>
+        <p>The Case Management module is the nucleus of LCMS. It governs every CRUD operation related to <code>case_files</code> and their child entities. The module is constructed around a REST-style controller (<code>Lawyer\CaseController</code>) supported by Service classes for heavy business logic.</p>
+
+        <h4>4.1.1 Functional Scope</h4>
+        <ul>
+            <li>Create, edit, view and archive cases</li>
+            <li>Dynamic form rendering based on <code>case_type_id</code></li>
+            <li>Attachment handling (drag-and-drop, multi-upload, virus scan hook)</li>
+            <li>Automatic file number generator adhering to business prefix codes</li>
+        </ul>
+
+        <h4>4.1.2 UI Flow</h4>
+        <ol>
+            <li><strong>Dashboard → “New Case”</strong>: Lawyer selects case type.</li>
+            <li><strong>Dynamic Entry Form</strong>: Case-type specific fields appear via Alpine.js component <code>case-form</code>.</li>
+            <li><strong>Validation</strong>: Laravel Form Request + client-side constraints.</li>
+            <li><strong>Persist</strong>: Transactional save across <code>case_files</code>, related plaintiffs/defendants and type-specific tables.</li>
+            <li><strong>Redirect</strong> to Case Detail page with toast confirmation.</li>
+        </ol>
+
+        <h4>4.1.3 Data Model</h4>
+        <table>
+            <tr><th>Table</th><th>Key Fields</th><th>Relations</th></tr>
+            <tr><td><code>case_files</code></td><td>id, file_number, status, opened_at</td><td>1-to-* appeals, progress_updates, appointments</td></tr>
+            <tr><td><code>plaintiffs</code></td><td>name, contact_info</td><td>FK case_file_id</td></tr>
+        </table>
+
+        <h4>4.1.4 Exception Handling</h4>
+        <div class="note">Every DB transaction is wrapped in <code>try–catch</code>; failures logged via Monolog channel <em>cases</em>.</div>
+    </article>
+
+    <!-- 4.2 APPEALS MODULE -->
+    <article id="module-appeals" class="page-break">
+        <h3>4.2 Appeals &amp; Cassation</h3>
+        <p>This module enforces sequential appeal progression and maintains jurisprudential history.</p>
+
+        <h4>4.2.1 Business Rules</h4>
+        <ul>
+            <li>Allowed Levels: <em>Appeal</em> ⇒ <em>Second</em> ⇒ <em>Cassation</em>.</li>
+            <li>Exactly one record per level per case (DB unique index).</li>
+            <li>Attempt to skip or duplicate a level triggers 422 error with explicit message.</li>
+        </ul>
+
+        <h4>4.2.2 Controller Responsibilities</h4>
+        <pre><code>AppealController@store
+├─ Validate payload
+├─ Verify sequence integrity
+├─ Persist to <strong>appeals</strong> table
+└─ Dispatch ProgressUpdate("Appeal Filed")</code></pre>
+
+        <h4>4.2.3 DB Indices &amp; Constraints</h4>
+        <table>
+            <tr><th>Index Name</th><th>Columns</th><th>Purpose</th></tr>
+            <tr><td>appeals_case_level_unique</td><td>case_file_id, level</td><td>Prevents duplication</td></tr>
+        </table>
+    </article>
+
+    <!-- 4.3 SUPERVISOR MODULE -->
+    <article id="module-supervision">
+        <h3>4.3 Supervisor Approval</h3>
+        <p>The Supervision layer adds managerial oversight. The approval routine is exposed via <code>Supervisor\CaseController@approveClosure</code>.</p>
+        <h4>Process Steps</h4>
+        <ol>
+            <li>Supervisor opens <code>/supervisor/cases/approvals</code> listing.</li>
+            <li>Clicks “Review” → Modal shows judgment summary &amp; attachments.</li>
+            <li>Decision recorded (<code>approved</code> | <code>follow_up</code>).</li>
+            <li>System logs progress update and fires notification to Lawyer.</li>
+        </ol>
+    </article>
+
+    <!-- 4.4 AUDIT MODULE -->
+    <article id="module-audit">
+        <h3>4.4 Audit Logging</h3>
+        <p>Audit entries are created via global <code>Auditable</code> trait attached to all major models. JSON diff is generated using <code>spatie/laravel-activitylog</code>.</p>
+        <h4>Stored Columns</h4>
+        <ul><li>event (created|updated|deleted)</li><li>user_id</li><li>url</li><li>ip_address</li><li>old_values</li><li>new_values</li></ul>
+    </article>
+
+    <!-- 4.5 NOTIFICATION MODULE -->
+    <article id="module-notify">
+        <h3>4.5 Notification Engine</h3>
+        <p>Notifications utilise Laravel queue workers. All templates are localised via <code>lang/{locale}/notifications.php</code>.</p>
+        <h4>Channels</h4>
+        <table>
+            <tr><th>Channel</th><th>Driver</th><th>Use-Case</th></tr>
+            <tr><td>Email</td><td>SMTP</td><td>Case assignments, hearing reminders</td></tr>
+            <tr><td>Database</td><td>In-app</td><td>Supervisor approvals, document comments</td></tr>
+        </table>
+    </article>
+
+    <!-- 4.6 REPORTS MODULE -->
+    <article id="module-reports">
+        <h3>4.6 Reporting &amp; Analytics</h3>
+        <p>Reports are generated on-demand; heavy queries are cached for 30 minutes using Redis.</p>
+        <h4>Key Reports</h4>
+        <ul>
+            <li>Appeal Performance (stage-wise win/loss)</li>
+            <li>Case Ageing Buckets (0-90, 91-180, 180+ days)</li>
+            <li>Recovery Rate per Branch</li>
+        </ul>
+    </article>
+
+    <!-- 4.7 SETTINGS MODULE -->
+    <article id="module-settings" class="page-break">
+        <h3>4.7 Administration &amp; Settings</h3>
+        <p>The Settings module manipulates reference data: Branches, Work Units, Courts, Roles, Permissions. Each entity uses standard resource controllers and Livewire Datatables for inline editing.</p>
+        <h4>Backup &amp; Restore</h4>
+        <p>Admins can trigger on-demand database dump; files stored in <code>storage/backups</code> with timestamped naming convention.</p>
+    </article>
+</section>
+
+<!-- CASE TYPES DETAIL -->
+<section id="case-types" class="page-break">
+    <h2>5. Case Type Specifications</h2>
+    <p>Below tables list <em>every field</em> rendered on entry/edit screens for each case type. Validation rules refer to Laravel form request classes.</p>
+    <!-- Created earlier tables; reuse with additional columns -->
+    <table>
+        <thead><tr><th rowspan="2">Field (Clean Loan)</th><th rowspan="2">Type</th><th colspan="2">Validation</th><th rowspan="2">Description</th></tr>
+        <tr><th>Rule</th><th>Error Msg.</th></tr></thead>
+        <tbody>
+            <tr><td>Branch</td><td>Select</td><td>required</td><td>"Select branch"</td><td>Originating ORGANIZATION branch</td></tr>
+            <tr><td>Internal File #</td><td>Text</td><td>required|unique</td><td>"Duplicate file #"</td><td>Org ref no.</td></tr>
+            <tr><td>Outstanding Amount</td><td>Decimal</td><td>required|min:0</td><td>"Amount invalid"</td><td>Remaining principal</td></tr>
+            <tr><td>Claimed Amount</td><td>Decimal</td><td>required|min:0</td><td>"Amount invalid"</td><td>Court claim value</td></tr>
+            <tr><td>Court Name</td><td>Select</td><td>required</td><td>"Select court"</td><td>Entraining court</td></tr>
+            <tr><td>Docs</td><td>File</td><td>nullable|mimes:pdf,docx|max:8192</td><td>"Invalid file"</td><td>Supporting files</td></tr>
+        </tbody>
+    </table>
+    <p><em>Repeat similar expanded tables for Labor, Civil, Criminal...</em></p>
+</section>
+
+<!-- DB SCHEMA -->
+<section id="db" class="page-break">
+    <h2>6. Database Schema Overview</h2>
+    <p>Key tables and relationships (PK ►, FK ↘):</p>
+    <ul>
+        <li><strong>case_files ►</strong> ↘ <code>appeals</code>, <code>progress_updates</code>, <code>appointments</code>, <code>documents</code></li>
+        <li><strong>appeals ►</strong> (<code>case_file_id</code>) unique per <code>level</code></li>
+        <li><strong>progress_updates ►</strong> (<code>case_file_id</code>)</li>
+        <li><strong>audit_logs ►</strong> polymorphic <code>auditable_id</code>/<code>auditable_type</code></li>
+    </ul>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+    <h2>7. Security &amp; Compliance</h2>
+    <ul>
+        <li><strong>Authentication:</strong> HTTPS enforced, bcrypt hashed passwords, optional 2FA.</li>
+        <li><strong>Authorisation:</strong> Middleware <code>CheckRole</code> + Policy classes.</li>
+        <li><strong>Data Protection:</strong> S3/Local encryption at rest; document access signed URLs.</li>
+        <li><strong>Audit Compliance:</strong> Immutable logs meet ISO&nbsp;27001 evidence requirements.</li>
+    </ul>
+</section>
+
+<!-- APPENDIX -->
+<section id="appendix" class="page-break">
+    <h2>8. Appendix: Key Endpoints &amp; Screenshots</h2>
+    <h3>8.1 API / Web Routes</h3>
+    <table>
+        <tr><th>Route Name</th><th>URI</th><th>Method</th><th>Role Access</th></tr>
+        <tr><td>lawyer.cases.index</td><td>/lawyer/cases</td><td>GET</td><td>Lawyer</td></tr>
+        <tr><td>cases.appeals.store</td><td>/lawyer/cases/{id}/appeals</td><td>POST</td><td>Lawyer</td></tr>
+        <tr><td>supervisor.cases.approve</td><td>/cases/{id}/approve</td><td>POST</td><td>Supervisor</td></tr>
+    </table>
+
+    <h3>8.2 Screen References</h3>
+    <p><em>Embed or link UI screenshots here for the customer PDF/Word version.</em></p>
+</section>
+
+</body>
+</html>
+
+
+
+

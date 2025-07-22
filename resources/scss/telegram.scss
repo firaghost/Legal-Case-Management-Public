@@ -1,0 +1,323 @@
+/* Telegram Web inspired SCSS theme and layout */
+
+/* --------------- CSS Variables --------------- */
+:root {
+  /* Palette */
+  --tg-accent: #0088cc;
+  --tg-accent-light: #2aabee;
+  --tg-success: #2ba745;
+  --tg-error: #ea3b35;
+
+  --tg-bg: #e5eaf1;
+  --tg-bg-light: #f7f8fa;
+  --tg-bg-sidebar: #ffffff;
+
+  --tg-border: #dfe3e7;
+  --tg-border-light: rgba(0, 0, 0, 0.07);
+
+  --tg-text-primary: #1f1f1f;
+  --tg-text-secondary: #707579;
+  --tg-text-accent: var(--tg-accent);
+
+  /* Layout */
+  --tg-sidebar-width: 320px;
+  --tg-header-height: 60px;
+  --tg-composer-height: 68px;
+
+  /* Radii */
+  --tg-radius-pill: 9999px;
+  --tg-radius-bubble: 18px;
+
+  /* Z-index */
+  --tg-z-sidebar: 100;
+  --tg-z-header: 200;
+  --tg-z-context-menu: 9999;
+
+  /* Animations */
+  --tg-transition-fast: 80ms;
+  --tg-transition-normal: 150ms;
+}
+
+/* --------------- Resets / Base Typography --------------- */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", "Roboto", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  background: var(--tg-bg-light);
+  color: var(--tg-text-primary);
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* --------------- Layout Containers --------------- */
+.tg-root {
+  display: flex;
+  height: 100vh;
+  background: var(--tg-bg-light);
+  overflow: hidden;
+}
+
+.tg-sidebar {
+  width: var(--tg-sidebar-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--tg-bg-sidebar);
+  border-right: 1px solid var(--tg-border);
+  z-index: var(--tg-z-sidebar);
+}
+
+.tg-chat-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* --------------- Sidebar Elements --------------- */
+.tg-sidebar__header {
+  height: var(--tg-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--tg-border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.tg-sidebar__search {
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--tg-border-light);
+}
+
+.tg-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid var(--tg-border);
+  border-radius: var(--tg-radius-pill);
+  background: var(--tg-bg-light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' stroke='%23707579' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") no-repeat 12px center/16px;
+  font-size: 14px;
+  transition: border-color var(--tg-transition-fast);
+}
+
+.tg-search-input:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: var(--tg-accent);
+}
+
+/* --------------- Conversation Row --------------- */
+.tg-dialog {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: background var(--tg-transition-fast);
+}
+
+.tg-dialog:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.tg-dialog--active {
+  background: var(--tg-accent);
+  color: #fff;
+}
+
+.tg-dialog__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.tg-dialog__content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.tg-dialog__title {
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tg-dialog__snippet {
+  font-size: 13px;
+  color: var(--tg-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tg-dialog__time {
+  font-size: 12px;
+  color: var(--tg-text-secondary);
+}
+
+.tg-dialog__badge {
+  background: var(--tg-accent);
+  color: #fff;
+  border-radius: var(--tg-radius-pill);
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  min-width: 20px;
+  text-align: center;
+  margin-left: 8px;
+}
+
+/* --------------- Chat Header --------------- */
+.tg-chat-header {
+  height: var(--tg-header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--tg-border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.tg-chat-header__title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.tg-chat-header__status {
+  font-size: 12px;
+  color: var(--tg-text-secondary);
+}
+
+/* --------------- Message Bubbles --------------- */
+.tg-bubble {
+  position: relative;
+
+  max-width: 90%;
+  padding: 8px 12px;
+  border-radius: var(--tg-radius-bubble);
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: normal; // allow natural wrapping at spaces
+  overflow-wrap: anywhere;
+  position: relative;
+  transition: background var(--tg-transition-fast);
+}
+
+/* -------------- Reply preview inside bubbles -------------- */
+.tg-reply-block {
+  padding: 4px 6px;
+  border-left: 3px solid var(--tg-accent);
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 4px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.tg-reply-author {
+  font-weight: 600;
+  display: block;
+}
+
+.tg-reply-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Different theme for outgoing vs incoming */
+.tg-bubble--out .tg-reply-block {
+  background: rgba(255, 255, 255, 0.15);
+  border-left-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+.tg-bubble--in .tg-reply-block {
+  background: rgba(0, 0, 0, 0.06);
+  border-left-color: var(--tg-accent);
+  color: var(--tg-text-primary);
+}
+
+.tg-bubble--out {
+  background: var(--tg-accent);
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.tg-bubble--in {
+  background: #ffffff;
+  border: 1px solid var(--tg-border);
+  color: var(--tg-text-primary);
+}
+
+
+/* --------------- Message Rows --------------- */
+.tg-message-row {
+  display: flex;
+  width: 100%;
+}
+
+.tg-message-row--outgoing {
+  justify-content: flex-end;
+}
+
+/* --------------- Composer --------------- */
+.tg-composer {
+  height: var(--tg-composer-height);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-top: 1px solid var(--tg-border);
+}
+
+.tg-composer__input {
+  flex: 1;
+  min-height: 36px;
+  max-height: 120px;
+  padding: 10px 14px;
+  border: 1px solid var(--tg-border);
+  border-radius: var(--tg-radius-bubble);
+  font-size: 15px;
+  resize: none;
+  background: #fff;
+  transition: border-color var(--tg-transition-fast);
+}
+
+.tg-composer__input:focus {
+  outline: none;
+  border-color: var(--tg-accent);
+}
+
+/* --------------- Context Menu --------------- */
+.tg-context-menu {
+  width: 240px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  padding: 4px 0;
+}
+
+.tg-context-menu__item {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  transition: background var(--tg-transition-fast);
+}
+
+.tg-context-menu__item:hover {
+  background: rgba(0,0,0,0.05);
+}
+

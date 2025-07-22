@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import theme toggle styles */
+@import url('/css/theme-toggle.css');
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #15803d 0%, #4ade80 50%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gradient border utility */
+.gradient-border {
+  border-image: linear-gradient(135deg, #15803d 0%, #4ade80 50%, #3b82f6 100%);
+  border-image-slice: 1;
+}

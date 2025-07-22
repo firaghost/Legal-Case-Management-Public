@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Legal Case Management System – Functional Documentation</title>
+    <style>
+        body{font-family:Segoe UI,Arial,sans-serif;margin:0;color:#222;line-height:1.6;background:#fff}
+        header{background:#0d47a1;color:#fff;padding:40px 20px}
+        h1,h2,h3,h4{margin:24px 0 12px;font-weight:600;line-height:1.3}
+        h1{font-size:32px}
+        h2{font-size:26px;border-bottom:3px solid #0d47a1;padding-bottom:4px}
+        h3{font-size:20px;color:#0d47a1}
+        h4{font-size:16px}
+        nav{background:#fafafa;border-bottom:1px solid #ddd;padding:20px}
+        nav ul{margin:0;padding-left:20px}
+        nav li{margin:4px 0}
+        section{padding:20px 40px}
+        table{border-collapse:collapse;width:100%;margin:12px 0}
+        th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:14px}
+        th{background:#f2f2f2;font-weight:600}
+        code{background:#f5f5f5;padding:2px 4px;font-size:90%}
+        .page-break{page-break-after:always}
+    </style>
+</head>
+<body>
+<header>
+    <h1>Legal Case Management System (LCMS)</h1>
+    <p>Comprehensive Functional Documentation</p>
+</header>
+
+<nav>
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#overview">1. System Overview</a></li>
+        <li><a href="#roles">2. User Roles &amp; Permissions</a></li>
+        <li><a href="#lifecycle">3. Case Lifecycle Workflow</a></li>
+        <li><a href="#workflows">4. Detailed Workflows</a>
+            <ul>
+                <li><a href="#workflow-supervisor">4.1 Supervisor Approval</a></li>
+                <li><a href="#workflow-appeal">4.2 Appeal / Cassation</a></li>
+                <li><a href="#workflow-notification">4.3 Notification System</a></li>
+                <li><a href="#workflow-audit">4.4 Audit Logging</a></li>
+            </ul>
+        </li>
+        <li><a href="#case-types">5. Case Types &amp; Entry Forms</a>
+            <ul>
+                <li><a href="#case-clean">5.1 Clean Loan Recovery (Code&nbsp;01)</a></li>
+                <li><a href="#case-labor">5.2 Labor Litigation (Code&nbsp;02)</a></li>
+                <li><a href="#case-civil">5.3 Other Civil Litigation (Code&nbsp;03)</a></li>
+                <li><a href="#case-criminal">5.4 Criminal Litigation (Code&nbsp;04)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">6. Reporting &amp; Analytics</a></li>
+        <li><a href="#settings">7. Administration &amp; Configuration</a></li>
+    </ul>
+</nav>
+
+<section id="overview">
+    <h2>1. System Overview</h2>
+    <p>The Legal Case Management System (LCMS) centralises the end-to-end processing of litigation cases for the organisation. It supports multiple litigation categories, streamlined appeal/cassation stages, robust supervision, granular audit logging and real-time notifications. LCMS is built on Laravel 12, MySQL and Tailwind-powered Blade front-end templates.</p>
+</section>
+
+<section id="roles" class="page-break">
+    <h2>2. User Roles &amp; Permissions</h2>
+    <table>
+        <thead><tr><th>Role</th><th>Core Permissions</th><th>Restricted Areas</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Lawyer</strong></td>
+                <td>
+                    <ul>
+                        <li>Create &amp; edit cases assigned to them</li>
+                        <li>Enter progress updates, appeals, appointments</li>
+                        <li>Upload documents / evidences</li>
+                    </ul>
+                </td>
+                <td>Cannot approve case closure / execution; read-only access to other lawyers’ cases</td>
+            </tr>
+            <tr>
+                <td><strong>Supervisor</strong></td>
+                <td>
+                    <ul>
+                        <li>View all cases</li>
+                        <li>Approve or reject closure/execution after Cassation</li>
+                        <li>Generate supervisor reports</li>
+                    </ul>
+                </td>
+                <td>Cannot change admin system settings</td>
+            </tr>
+            <tr>
+                <td><strong>Admin</strong></td>
+                <td>
+                    <ul>
+                        <li>Full CRUD across all modules</li>
+                        <li>Manage users, roles, branches, work units</li>
+                        <li>System configuration, backups &amp; audit log access</li>
+                    </ul>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td><strong>System&nbsp;Administrator</strong></td>
+                <td>Infrastructure, deployments and DB maintenance</td>
+                <td>&mdash;</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="lifecycle">
+    <h2>3. Case Lifecycle Workflow</h2>
+    <ol>
+        <li><strong>Case Creation</strong> – Lawyer fills entry form, plaintiffs/defendants, claimed amount.</li>
+        <li><strong>Direct Suit Stage</strong> – Court filings, hearings, progress updates.</li>
+        <li><strong>Appeal Stage</strong> – If marked “Appeal Filed”, new appeal record opens.</li>
+        <li><strong>Second Appeal Stage</strong> – Triggered strictly after Appeal decision.</li>
+        <li><strong>Cassation Stage</strong> – Final appellate review; post-decision either execution or closure.</li>
+        <li><strong>Execution</strong> – Asset recovery / judgment enforcement where decision favourable.</li>
+        <li><strong>Final Closure</strong> – Supervisor validates and marks case closed.</li>
+    </ol>
+</section>
+
+<section id="workflows" class="page-break">
+    <h2>4. Detailed Workflows</h2>
+
+    <h3 id="workflow-supervisor">4.1 Supervisor Approval Workflow</h3>
+    <p>After Cassation verdict, case status changes to <code>Pending&nbsp;Execution</code>. Supervisor Panel lists waiting cases:</p>
+    <ul>
+        <li>Supervisor reviews decision summary &amp; attachments.</li>
+        <li>Action buttons: <em>Approve Execution</em> / <em>Request Follow-Up</em>.</li>
+        <li>Approval auto-creates a progress update “Execution Approved” and sets status <code>Execution</code>.</li>
+    </ul>
+
+    <h3 id="workflow-appeal">4.2 Appeal / Cassation Workflow</h3>
+    <table>
+        <thead><tr><th>Stage</th><th>Trigger</th><th>Editable Fields</th><th>Status Updates Generated</th></tr></thead>
+        <tbody>
+            <tr>
+                <td>Appeal</td>
+                <td>Lawyer ticks “Appeal Filed” on suit decision form</td>
+                <td>File #, Court, Notes, Decision Date, Claimed Amount</td>
+                <td>"Appeal Filed" &rarr; "Appeal Hearing Scheduled" &rarr; "Appeal Decision Passed"</td>
+            </tr>
+            <tr>
+                <td>Second&nbsp;Appeal</td>
+                <td>Appeal decision recorded &amp; lawyer selects "Second Appeal Filed"</td>
+                <td>Same as Appeal</td>
+                <td>"Second Appeal Filed" &rarr; "Second Appeal Hearing" &rarr; "Second Appeal Decision"</td>
+            </tr>
+            <tr>
+                <td>Cassation</td>
+                <td>Second Appeal verdict stored and lawyer files Cassation</td>
+                <td>Same as Appeal</td>
+                <td>"Cassation Requested" &rarr; "Cassation Verdict"</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 id="workflow-notification">4.3 Notification System</h3>
+    <ul>
+        <li>Email + in-app banner notifications for: new case assignment, upcoming hearing (24h prior), supervisor decisions.</li>
+        <li>Notifications stored in <code>notifications</code> table with polymorphic link to notifiable.</li>
+    </ul>
+
+    <h3 id="workflow-audit">4.4 Audit Logging</h3>
+    <p>Every create/update/delete on critical tables triggers <code>AuditLog</code> entry (model trait <code>Auditable</code>):</p>
+    <ul>
+        <li>Stored fields: table, record_id, action, user_id, values_before, values_after, ip.</li>
+        <li>Admin view: <em>System &gt; Logs</em> with CSV export.</li>
+    </ul>
+</section>
+
+<section id="case-types" class="page-break">
+    <h2>5. Case Types &amp; Entry Forms</h2>
+
+    <!-- Clean Loan -->
+    <h3 id="case-clean">5.1 Clean Loan Recovery (Code&nbsp;01)</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Validation</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>Branch</td><td>Dropdown (Branch)</td><td>Required</td><td>ORGANIZATION branch originating the loan</td></tr>
+            <tr><td>Internal File #</td><td>Text</td><td>Unique · Required</td><td>Organisation reference</td></tr>
+            <tr><td>Outstanding Amount</td><td>Decimal</td><td>Required · &gt;=0</td><td>Remaining loan principal</td></tr>
+            <tr><td>Claimed Amount</td><td>Decimal</td><td>Required</td><td>Sum being claimed in court</td></tr>
+            <tr><td>Court Name</td><td>Dropdown (Courts)</td><td>Required</td><td>Entraining court</td></tr>
+            <tr><td>Supporting Documents</td><td>File Upload (pdf,docx)</td><td>Optional</td><td>Loan agreements, statements</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Labor -->
+    <h3 id="case-labor">5.2 Labor Litigation (Code&nbsp;02)</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Validation</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>Work Unit</td><td>Dropdown (Work Units)</td><td>Required</td><td>Employee’s organisational division</td></tr>
+            <tr><td>Employee Name</td><td>Text</td><td>Required</td><td>Complainant</td></tr>
+            <tr><td>Claim Type</td><td>Dropdown</td><td>Required</td><td>e.g., Unlawful Dismissal, Wage&nbsp;Claim</td></tr>
+            <tr><td>Claimed Amount</td><td>Decimal</td><td>Optional</td><td>Monetary damages sought</td></tr>
+            <tr><td>Industrial Court #</td><td>Text</td><td>Optional</td><td>Court file reference</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Civil -->
+    <h3 id="case-civil">5.3 Other Civil Litigation (Code&nbsp;03)</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Validation</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>Court File #</td><td>Text</td><td>Required</td><td>Civil court reference</td></tr>
+            <tr><td>Claim Description</td><td>Textarea</td><td>Required</td><td>Nature of civil dispute</td></tr>
+            <tr><td>Claimed Amount</td><td>Decimal</td><td>Optional</td><td>Amount requested by plaintiff</td></tr>
+            <tr><td>Defendant Assets</td><td>File Upload</td><td>Optional</td><td>Evidentiary documents</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Criminal -->
+    <h3 id="case-criminal">5.4 Criminal Litigation (Code&nbsp;04)</h3>
+    <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Validation</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>Offence Type</td><td>Dropdown</td><td>Required</td><td>Fraud, Embezzlement, etc.</td></tr>
+            <tr><td>Prosecutor Name</td><td>Text</td><td>Required</td><td>Assigned prosecutor</td></tr>
+            <tr><td>Court Name</td><td>Dropdown</td><td>Required</td><td>Criminal court</td></tr>
+            <tr><td>Charge Sheet Ref.</td><td>Text</td><td>Optional</td><td>Police charge sheet number</td></tr>
+            <tr><td>Supporting Evidence</td><td>File Upload</td><td>Optional</td><td>Forensic reports, statements</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="reports" class="page-break">
+    <h2>6. Reporting &amp; Analytics</h2>
+    <ul>
+        <li><strong>Appeal Performance Report</strong> – Stage, claimed vs recovered, performance&nbsp;%.</li>
+        <li><strong>Supervisor Summary</strong> – Pending approvals, average closure time.</li>
+        <li><strong>Case Ageing</strong> – Days open grouped by type and lawyer.</li>
+        <li>Exports: PDF, Excel via <code>/reports/{module}/export</code>.</li>
+    </ul>
+</section>
+
+<section id="settings">
+    <h2>7. Administration &amp; Configuration</h2>
+    <ul>
+        <li>Branches, Work Units &amp; Court Codes management</li>
+        <li>Role-based permissions editor</li>
+        <li>System backups &amp; data export</li>
+        <li>Environment variables (email SMTP, file storage) via <code>.env</code></li>
+    </ul>
+</section>
+
+</body>
+</html>
+
+
+
+

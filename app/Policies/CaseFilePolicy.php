@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\CaseFile;
+use App\Models\User;
+use Illuminate\Auth\Access\Response;
+
+class CaseFilePolicy
+{
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->can('case_files.view');
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, CaseFile $caseFile): bool
+    {
+        // Users can view their own cases
+        if ($caseFile->lawyer_id === $user->id) {
+            return true;
+        }
+        
+        // Supervisors and admins can view all cases
+        if ($user->isSupervisor() || $user->isAdmin()) {
+            return true;
+        }
+        
+        return $user->can('case_files.view');
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $user->can('case_files.create');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, CaseFile $caseFile): bool
+    {
+        // Users can update their own cases
+        if ($caseFile->lawyer_id === $user->id) {
+            return true;
+        }
+        
+        // Supervisors and admins can update any case
+        return $user->isSupervisor() || $user->isAdmin();
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, CaseFile $caseFile): bool
+    {
+        // Only admins can delete cases
+        return $user->isAdmin() && $user->can('case_files.delete');
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, CaseFile $caseFile): bool
+    {
+        return $user->isAdmin() && $user->can('case_files.restore');
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, CaseFile $caseFile): bool
+    {
+        return $user->isAdmin() && $user->can('case_files.force_delete');
+    }
+}
+
+
+
+
+
+

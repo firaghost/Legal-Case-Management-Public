@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DEPLOYMENT_CHECKLIST</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
+        h1, h2, h3, h4, h5, h6 { color: #333; margin-top: 20px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; font-family: Consolas, monospace; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        blockquote { border-left: 4px solid #ddd; margin: 0; padding-left: 20px; color: #666; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1 id="lcms-final-deployment-checklist">LCMS – Final Deployment Checklist</h1>
+<p>Use this checklist before every release or promotion from staging ➜ production. Tick off each item to ensure a smooth, secure, and fully-functional deployment.</p>
+<hr />
+<h2 id="backend">✅ Backend</h2>
+<ul>
+<li>[ ] Laravel API container/host is live and reachable.</li>
+<li>[ ] <code>.env</code> points to <strong>production</strong> database &amp; cache servers.</li>
+<li>[ ] All migrations executed and DB seeded with minimal reference/test data.</li>
+<li>[ ] Role-based middleware (lawyer, supervisor, admin) tested with real accounts.</li>
+<li>[ ] File-upload paths (<code>storage/app/...</code>) secured &amp; validated; symbolic links (<code>storage:link</code>) created.</li>
+<li>[ ] CORS policy only allows approved front-end domains.</li>
+<li>[ ] HTTPS enforced; HSTS, secure cookies on.</li>
+<li>[ ] Queue / scheduler workers running (notifications, exports, observers).</li>
+</ul>
+<h2 id="frontend">✅ Frontend</h2>
+<ul>
+<li>[ ] React/Vite build completed (<code>npm run build</code>) – outputs hashed assets in <code>public/build</code>.</li>
+<li>[ ] Environment variables (<code>VITE_API_URL</code>, etc.) set for prod.</li>
+<li>[ ] All routes wrapped in <code>ProtectedRoute</code> guards.</li>
+<li>[ ] Sidebar and navigation render correctly per role.</li>
+<li>[ ] Error boundaries tested (network + render failures).</li>
+<li>[ ] Optional PWA manifest &amp; service-worker build verified.</li>
+</ul>
+<h2 id="reports-exports">✅ Reports &amp; Exports</h2>
+<ul>
+<li>[ ] All export buttons (PDF, Excel, CSV) tested with real data.</li>
+<li>[ ] Summary and performance charts rendering accurately.</li>
+<li>[ ] DOMPDF &amp; spreadsheet libraries working on server (fonts, temp paths).</li>
+</ul>
+<h2 id="authentication">✅ Authentication</h2>
+<ul>
+<li>[ ] JWT/login flow confirmed; token storage uses <code>httpOnly</code> cookies or secure localStorage.</li>
+<li>[ ] Token refresh &amp; expiry handling validated.</li>
+<li>[ ] Logout clears tokens &amp; redirects to <code>/login</code>.</li>
+</ul>
+<h2 id="file-uploads">✅ File Uploads</h2>
+<ul>
+<li>[ ] Evidence / advisory uploads accept only PDF, JPG, PNG.</li>
+<li>[ ] Max size limits enforced server-side &amp; client-side.</li>
+<li>[ ] Uploaded files virus-scanned (if service available).</li>
+</ul>
+<h2 id="ui-functional-tests">✅ UI &amp; Functional Tests</h2>
+<ul>
+<li>[ ] Case Entry validation rules fire (required, pattern, max-length).</li>
+<li>[ ] Timeline interactions (add progress, hearings) work on mobile + desktop.</li>
+<li>[ ] Supervisor Approval modals (execution / early closure) approve &amp; reject as expected.</li>
+<li>[ ] Admin Audit Log filtering &amp; export operate.</li>
+<li>[ ] Advisory dashboard tabs &amp; forms load and persist data.</li>
+</ul>
+<h2 id="admin-readiness">✅ Admin Readiness</h2>
+<ul>
+<li>[ ] User Management: create, edit, deactivate flows tested.</li>
+<li>[ ] Role changes propagate permissions immediately (re-login if required).</li>
+<li>[ ] System Settings (court names, branches) editable &amp; saved.</li>
+</ul>
+<h2 id="documentation-training">✅ Documentation &amp; Training</h2>
+<ul>
+<li>[ ] Updated <strong>User Manual</strong> (PDF) stored in /docs &amp; shared.</li>
+<li>[ ] Training slide deck reviewed with stakeholders.</li>
+<li>[ ] Internal API documentation published (Swagger / Postman) if exposed.</li>
+</ul>
+<h2 id="hosting-ops">✅ Hosting &amp; Ops</h2>
+<ul>
+<li>[ ] Staging &amp; production environments deployed and pass smoke tests.</li>
+<li>[ ] All <code>.env</code> secrets injected via CI/CD or hosting dashboard – <strong>never committed</strong>.</li>
+<li>[ ] Application, queue &amp; scheduler logs monitored (e.g., Laravel Telescope / Sentry).</li>
+<li>[ ] Automated nightly backups enabled for DB &amp; file storage; restore tested.</li>
+</ul>
+<h2 id="launch">✅ Launch</h2>
+<ul>
+<li>[ ] Live demo completed with key stakeholders.</li>
+<li>[ ] Pilot group test results reviewed; critical issues resolved.</li>
+<li>[ ] Feedback loop &amp; support channel established (email / ticketing).</li>
+<li>[ ] Final go-live sign-off received and deployment window scheduled.</li>
+</ul>
+<hr />
+<p><strong>Remember:</strong> After go-live, schedule a post-deployment review to capture lessons learned and update this checklist accordingly.</p>
+</body>
+</html>
+
+
+
